@@ -38,16 +38,4 @@ int main () {
 	printf("\nDas Ergebnis des Bruches lautet: %.2f", (float) iZaehler / iNenner);
 	
 	return 0;
-	
-	/*
-	 * Aufgabe: 
-	 *   Beurteilen Sie den gegebenen Code und führen Sie seine Funktion aus.
-	 *   Welche Ausgabe erhalten Sie, wenn folgende Eingabe getätigt wird:
-	 *
-	 *     8
-	 *     3
-	 *
-	 *   Antwort: 
-	 *     Das Ergebnis des Bruches lautet: 2 
-	 */
 }
