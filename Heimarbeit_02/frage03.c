@@ -59,5 +59,18 @@ int main () {
 	 */
 	fGewichtLadung = iAutosproLadung * (fGewichtAuto + fGewichtHuelle);
 	
+	/* 
+	 * Frage 3
+	 *
+	 * Aufgabe: Berechnen Sie
+	 *   o wie viele Autotransporte im Jahr benötigt werden
+	 *   o wie viele Autos tatsächlich im Jahr transportiert werden
+	 *   o wie viele Autos am Ende des Jahres nicht transportiert werden, weil sie keine volle 
+	 *     Ladung ergeben
+	 */
+	iAnzahlLadungen = iAnzahlAutos / iAutosproLadung;
+	iAnzahlVerladen = iAnzahlLadungen * iAutosproLadung;
+	iAnzahluebrig = iAnzahlAutos - iAnzahlVerladen;
+	
 	return 0;
 }

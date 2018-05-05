@@ -59,5 +59,38 @@ int main () {
 	 */
 	fGewichtLadung = iAutosproLadung * (fGewichtAuto + fGewichtHuelle);
 	
+	/* 
+	 * Frage 3
+	 *
+	 * Aufgabe: Berechnen Sie
+	 *   o wie viele Autotransporte im Jahr benötigt werden
+	 *   o wie viele Autos tatsächlich im Jahr transportiert werden
+	 *   o wie viele Autos am Ende des Jahres nicht transportiert werden, weil sie keine volle 
+	 *     Ladung ergeben
+	 */
+	iAnzahlLadungen = iAnzahlAutos / iAutosproLadung;
+	iAnzahlVerladen = iAnzahlLadungen * iAutosproLadung;
+	iAnzahluebrig = iAnzahlAutos - iAnzahlVerladen;
+	
+	/*
+	 * Frage 4
+	 *
+	 * Erzeugen Sie folgende beispielhafte Ausgabe:
+	 * Zum Beispiel:
+	 * +---------+--------------------------------------------------+
+	 * | Eingabe | Result                                           |
+	 * +---------+--------------------------------------------------+
+	 * | 51013   | Es werden 4251 Autotransporte im Jahr benoetigt. |
+	 * |         | Es werden 51012 Autos transportiert.             |
+	 * |         | Es bleiben am Ende des Jahres 1 Auto(s) uebrig.  |
+	 * |         | Eine Ladung wiegt 24006.00 kg.                   |
+	 * +---------+--------------------------------------------------+
+	 *
+	 */
+	printf("Es werden %d Autotransporte im Jahr benoetigt.\n", iAnzahlLadungen);
+	printf("Es werden %d Autos transportiert.\n", iAnzahlVerladen);
+	printf("Es bleiben am Ende des Jahres %d Auto(s) uebrig.\n", iAnzahluebrig);
+	printf("Eine Ladung wiegt %.2f kg.\n", fGewichtLadung);
+	
 	return 0;
 }
