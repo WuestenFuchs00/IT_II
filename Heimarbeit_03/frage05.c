@@ -77,7 +77,7 @@ int main () {
     }
 	//Wenn weder Mann noch Frau
     else {
-        printf("\nUngueltiges Geschlecht!");
+      printf("\nUngueltiges Geschlecht!");
     }
   }
   //Zeit nicht plausibel
