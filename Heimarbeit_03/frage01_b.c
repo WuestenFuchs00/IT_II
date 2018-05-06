@@ -71,13 +71,14 @@ int main () {
   
   // Einlesen der Variablen
   printf("Bitte geben Sie die Oberflaeche in Quadratmetern ein:");
-  scanf("%f", &fOflaeche);
+  iOutOflaeche = scanf("%f", &fOflaeche);
         
   printf("\nBitte geben Sie die maximal auf die Flaeche wirkende Kraft in kN ein:");
-  scanf("%f", &fmax);
+  iOutFMax = scanf("%f", &fmax);
    
   // Pruefen, ob zwei floats korrekt eingelesen wurden
-  if ( fOflaeche == 0 || fmax == 0 ) {
+  //if ( fOflaeche == 0 || fmax == 0 ) {
+  if ( iOutOflaeche <= 0 || iOutFMax <= 0 ) {
     printf("\nEinlesevorgang gescheitert!");
     return 1; //Rückgabewert 1 bricht das Programm ab
   }

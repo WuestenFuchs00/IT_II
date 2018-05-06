@@ -64,11 +64,7 @@ int main () {
    * +-------------+------------------------------------------------------------------------+
    *
    */
-  
-  // Return values for scanf()
-  int iOutOflaeche = 0;
-  int iOutFMax = 0;
-  
+   
   // Einlesen der Variablen
   printf("Bitte geben Sie die Oberflaeche in Quadratmetern ein:");
   scanf("%f", &fOflaeche);
@@ -81,6 +77,25 @@ int main () {
     printf("\nEinlesevorgang gescheitert!");
     return 1; //Rückgabewert 1 bricht das Programm ab
   }
+  
+  /*
+   * Frage 2, Aufgabe:
+   * Berechnen Sie den maximal zulässigen Druck in [bar] und die maximale Tauchtiefe in [m].
+   *
+   * Hinweise und Tipps:
+   *   o Benutzen Sie für die Berechnung des maximalen Druckes folgende Formel: p=F/A
+   *   o pro Meter Tauchtiefe steigt der Druck um 0.1bar
+   */
+  
+  // Berechnungen
+  // Druck = Kraft/Fläche
+  fDruck = fmax / fOflaeche;  // kPa
+  
+  // kPa in bar ( 1 Pa = 1 N/m^2 , 1 bar = 10^5 Pa , 1 kPa = 1/100 bar)
+  fbar = fDruck / 100;
+  
+  // 0.1 bar pro 1m Tiefe mehr
+  fTiefe = fbar / 0.1;
   
   return 0;
 }
