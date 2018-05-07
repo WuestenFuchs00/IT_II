@@ -1,5 +1,5 @@
 /**
- * ZentralÃ¼bung 3
+ * Zentralübung 3
  *
  * Frage 1
  *
@@ -11,10 +11,10 @@
  * Aufgabe:
  *
  * Implementieren Sie ein C-Programm, welches 
- *   o mittels switch-case Struktur die Aktoren fÃ¼r den "oberen LÃ¼fter", die "FuÃŸheizung" und 
+ *   o mittels switch-case Struktur die Aktoren für den "oberen Lüfter", die "Fußheizung" und 
  *     die "Frontscheibenheizung" im entsprechenden Zustand auf "1" schaltet
  *   o eine Fehlermeldung ausgibt und alle Aktoren auf "0" setzt, sollte der Benutzer den Schalter
- *     auf eine unzulÃ¤ssige Position drehen 
+ *     auf eine unzulässige Position drehen 
  *
  * Hinweise und Tipps:
  *   o In der gezeigten Grafik (Heizungsregler) befindet sich der Schalter auf Schalterstellung 2
@@ -41,49 +41,54 @@
  *  |          | Frontscheibenheizung: 0                               |
  *  +----------+-------------------------------------------------------+
  */
-#include <stdio.h>
+#include<stdio.h>
+ 
+int main()
+{
+    //Variablendeklaration
+    int iSchalterstellung = 0;
+    int iOben = 0;
+    int iFuss = 0;
+    int iFront = 0;
 
-int main () {
-  // Variablendeklaration
-  int iSchalterstellung = 0, 
-      iObererLuefter = 0, 
-	  iFussheizung = 0, 
-	  iFrontscheibenheizung = 0;
-  
-  // Einlesevorgang der Schalterstellung
-  printf("Schalterstellung:\n");
-  if ( scanf(" %i", &iSchalterstellung) == 0 ) {
-	printf("\nUngueltige Schalterstellung!");
-	return 1;
-  }
-  
-  // switch-case zum Setzen der Aktoren (siehe Grafik Heizungsregler)
-  switch ( iSchalterstellung )  {
-	//Schalterstellung 0 : Nur oberer LÃ¼fter
-    case 0:
-	  iObererLuefter = 1;
-      break;	
-    //Schalterstellung 1 : Oberer LÃ¼fter und Fussheizung
-    case 1:
-	  iObererLuefter = iFussheizung = 1;
-      break;  
-    //Schalterstellung 2 : Nur Fussheizung
-    case 2:
-	  iFussheizung = 1;
-      break;
-    //Schalterstellung 3
-    case 3:
-	  iFrontscheibenheizung = iFussheizung = 1;
-      break;  
-    //sonst
-    default:
-      printf("Fehler bei der Schalterstellung!\n");
-	  break;
-  }
-  
-  // Ausgabe der Zustaende der Aktoren
-  printf("\nAktivierte Luefter in aktueller Schalterstellung %i:\n", iSchalterstellung);
-  printf("Oberer Luefter: %i\nFussheizung: %i\nFrontscheibenheizung: %i", iObererLuefter, iFussheizung, iFrontscheibenheizung);
-  
-  return 0;
+    //Schalterstellung einlesen
+    printf("Schalterstellung:\n");
+    scanf("%i", &iSchalterstellung);
+ 
+    //switch-case zum Setzen der Aktoren
+    switch(iSchalterstellung)
+    {
+        case 0:
+            iOben = 1;
+            iFuss = 0;
+            iFront = 0;
+            break;
+        case 1:
+            iOben = 1;
+            iFuss = 1;
+            iFront = 0;
+            break;
+        case 2:
+            iOben = 0;
+            iFuss = 1;
+            iFront = 0;
+            break;
+        case 3:
+            iOben = 0;
+            iFuss = 1;
+            iFront = 1;
+        break;
+        default:
+            printf("Fehler bei der Schalterstellung!\n");
+            iOben = 0;
+            iFuss = 0;
+            iFront = 0;
+        break;
+    }
+ 
+    //Ausgabe der Zustaende der Aktoren
+    printf("\nAktivierte Luefter in aktueller Schalterstellung %i:\n", iSchalterstellung);
+    printf("Oberer Luefter: %i\nFussheizung: %i\nFrontscheibenheizung: %i", iOben, iFuss, iFront);
+ 
+    return 0;
 }
