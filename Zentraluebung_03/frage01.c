@@ -47,21 +47,31 @@ int main () {
   float fGruenA = 50, fGruenB = 75;
  
   printf("Bitte geben Sie die Verkehrsdichte von Strasse A ein:");
-  scanf(" %i", &iVDichteA);
+  if ( scanf(" %i", &iVDichteA) == 0 ) {
+	printf("\nUngueltige Eingabe!");
+	return 1;
+  }
  
   printf("\nBitte geben Sie die Verkehrsdichte von Strasse B ein:");
-  scanf(" %i", &iVDichteB);
+  if ( scanf(" %i", &iVDichteB) == 0 ) {
+	printf("\nUngueltige Eingabe!");
+	return 1;
+  }
  
   //Berechnung des Verkehrsdichtenquotienten
+  if ( iVDichteB == 0 ) {
+	printf("\nDivision durch Null !");
+	return 1;
+  }
   fQuotient = (float) iVDichteA / iVDichteB;
   
   //Grünphasen Berechnung
   if ( iVDichteA > 200 || iVDichteB > 200 ) {
 	fGruenA *= fQuotient;
 	fGruenB /= fQuotient;
-  } else if ( iVDichteA < 50 && iVDichteB < 50 ) {
-	fGruenA *= .5;
-	fGruenB *= .5;
+  } else {
+	  if ( iVDichteA < 50 ) fGruenA *= .5;
+	  if ( iVDichteB < 50 ) fGruenB *= .5;
   }
  
   printf("\nDie Gruenphase fuer Strasse A betraegt: %.2f", fGruenA);
