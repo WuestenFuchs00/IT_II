@@ -45,7 +45,7 @@
 
 int main () {
   // Variablendeklaration
-  int iSchalterstellung = 0, 
+  int iSchalterstellung = 0,
       iObererLuefter = 0, 
 	  iFussheizung = 0, 
 	  iFrontscheibenheizung = 0;
