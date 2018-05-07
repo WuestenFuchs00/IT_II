@@ -78,11 +78,13 @@ int main () {
 	//Wenn weder Mann noch Frau
     else {
       printf("\nUngueltiges Geschlecht!");
+	  return 1;
     }
   }
   //Zeit nicht plausibel
   else {
     printf("\nUngueltige Uhrzeit!");
+	return 1;
   }
   
   return 0;

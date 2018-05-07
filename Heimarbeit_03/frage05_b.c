@@ -48,7 +48,7 @@
 int main () {
   
   // Variableninitialisierung
-  char sUhrzeit[10];
+  char sUhrzeit[30];
   char cGeschlecht = 0;
   char *sEndPtr; // pointer to the next character (in sUhrzeit) after the numerical value
                  // i.e. if sUhrzeiit is 9.55, then sEndPtr will be .55, length 3  
