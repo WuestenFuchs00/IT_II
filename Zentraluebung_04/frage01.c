@@ -43,7 +43,7 @@
 
 int main () {
   // Variablendeklaration
-  double dUntereGrenze, dObereGrenze;
+  float dUntereGrenze, dObereGrenze;
   double Schrittweite; // °°Verwendet double (2x Genauigkeit) anstatt float (1x Genauigkeit)
   double dZaehler, dFormel, dErgebnis = 0;
  
