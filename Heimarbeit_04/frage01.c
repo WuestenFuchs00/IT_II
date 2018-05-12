@@ -61,78 +61,81 @@
 #include <stdio.h>
 
 int main () {
+
+  //Variablendeklaration
+  int iEingabe;
+  float fPreis = 0;
   
-  // Variablendeklaration (Global)
-  unsigned short int iGetraenk, iWeiteresGetraenk, iStatus; // short = half = 1/2 int
-  double dPreis = 0;
-  
-  // Schleifen+Fallunterscheidung zum Abfragen der Getraenke
+  //Schleifen+Fallunterscheidung zum Abfragen der Getraenke
   do {
+  
     do {
       printf("Bitte waehlen Sie ein Getraenk:\nMineralwasser(1) 0.50 Euro \nLimonade(2) 1.00 Euro \nApfelsaft(3) 1.50 Euro\n");
-      if ( scanf(" %hu", &iGetraenk) == 0 ) {
-        printf("Ungueltige Eingabe!\n");
+      if ( scanf("%i", &iEingabe) == 0 ) {
+        printf("\nUngueltige Eingabe!");
         return 1;
       }
-      // Fallunterscheidung_1
-      switch ( iGetraenk ) {
-        // Mineralwasser
-        case 1:
-          dPreis += .5;
-          printf("\nSie haben ein Mineralwasser gewaehlt.\nGesamtpreis: %.2lf Euro", dPreis);
-          break;
-        // Limonade
-        case 2:
-          dPreis += 1;
-          printf("\nSie haben eine Limonade gewaehlt.\nGesamtpreis: %.2lf Euro", dPreis);
-          break;
-        // Apfelsaft
-        case 3:
-          dPreis += 1.5;
-          printf("\nSie haben einen Apfelsaft gewaehlt.\nGesamtpreis: %.2lf Euro", dPreis);
-          break;
-        default:
-          break;
-      }
-    } while ( iGetraenk > 3 || iGetraenk < 1 );
-    // Abfrage: Weiteres Getraenk            
-    printf("\nWuenschen Sie ein weiteres Getraenk? Ja(1)/Nein(0)\n");
-    if ( scanf("%hu", &iWeiteresGetraenk) == 0 ) {
-      printf("Ungueltige Eingabe!\n");
-      return 1;
+    } while ( !(iEingabe == 1 || iEingabe == 2 || iEingabe == 3) );
+    
+    //Fallunterscheidung_1
+    switch ( iEingabe ) {
+      //Mineralwasser
+      case 1:
+        fPreis += .5;
+        printf("\nSie haben ein Mineralwasser gewaehlt.\nGesamtpreis: %.2f Euro", fPreis);
+        break;    
+      //Limonade
+      case 2:
+        fPreis += 1;
+        printf("\nSie haben eine Limonade gewaehlt.\nGesamtpreis: %.2f Euro", fPreis);
+        break;
+      //Apfelsaft
+      default: // case 3
+        fPreis += 1.5;
+        printf("\nSie haben einen Apfelsaft gewaehlt.\nGesamtpreis: %.2f Euro", fPreis);
+        break;
     }
-  } while ( iWeiteresGetraenk != 0 );
+    
+    //Abfrage:Weiteres Getraenk            
+    do {
+      printf("\nWuenschen Sie ein weiteres Getraenk? Ja(1)/Nein(0)\n");
+      if ( scanf("%i", &iEingabe) == 0 ) {
+        printf("\nUngueltige Eingabe!");
+        return 1;
+      }
+    } while ( !(iEingabe == 0 || iEingabe == 1) );
+    
+  } while ( iEingabe == 1 );
  
-  // Unterscheidung zwischen Student, Mitarbeiter und Gast
+  //Unterscheidung zwischen Student, Mitarbeiter und Gast
   do {
     printf("\nSind Sie Student(1), Mitarbeiter(2) oder Gast(3)?");
-    if ( scanf("%hu", &iStatus) == 0 ) {
-      printf("Ungueltige Eingabe!\n");
+    if ( scanf("%i", &iEingabe) == 0 ) {
+      printf("\nUngueltige Eingabe!");
       return 1;
     }
-    // Fallunterscheidung_2
-    switch ( iStatus ) {
-      // Student
-      case 1:
-        printf("\nAls Student erhalten Sie 50 Prozent Rabatt.");
-        dPreis *= .5;
-        break;
-      // Mitarbeiter
-      case 2:
-        printf("\nAls Mitarbeiter erhalten Sie 25 Prozent Rabatt.");
-        dPreis *= .75;
-        break;
-      // Gast
-      case 3:
-        printf("\nAls Gast zahlen Sie den Normalpreis.");
-        break;
-      default:
-        break;
-    }
-  } while ( iStatus > 3 || iStatus < 1 );
- 
-  // Ausgabe des zu zahlenden Betrages
-  printf("\nBitte zahlen Sie: %.2lf Euro \nVielen Dank fuer Ihren Einkauf.", dPreis);
+  } while ( !(iEingabe == 1 || iEingabe == 2 || iEingabe ==3) );
+  //Fallunterscheidung_2
+  switch ( iEingabe ) {
+    //Student
+    case 1:
+      printf("\nAls Student erhalten Sie 50 Prozent Rabatt.");
+      fPreis *= .5;
+      break;      
+    //Mitarbeiter
+    case 2:
+      printf("\nAls Mitarbeiter erhalten Sie 25 Prozent Rabatt."); 
+      fPreis *= .75;
+      break;
+    //Gast
+    default: //case 3
+      printf("\nAls Gast zahlen Sie den Normalpreis.");
+      break;
+  } 
+
+  //Ausgabe des zu zahlenden Betrages
+  printf("\nBitte zahlen Sie: %.2f Euro \nVielen Dank fuer Ihren Einkauf.", fPreis);
+
 
   return 0;
 }

@@ -48,86 +48,99 @@
 
 int main () {
 
-// Variablendeklaration
-char cZiel; // Reiseziel
-char cEingabe = '0';
-char cWeiteresTicket = '0';
-unsigned int iPreis = 0;
+  //Variablendeklaration
+  char cZiel;
+  int iEingabe = 1;
+  unsigned int iGesamtpreis = 0;
+  
+  const unsigned short int iPreisBerlin = 75;
+  const unsigned short int iPreisFrankfurt = 50;
+  const unsigned short int iPreisAugsburg = 25;
  
-//Schleife zum Einlesen des Reiseziels
-while ( cEingabe == '0' ) {
+ 
+  //Schleife zum Einlesen des Reiseziels
   do {
     printf ("Wo moechten Sie hinfahren? Berlin(B), Frankfurt(F) oder Augsburg(A)");
-    scanf(" %c", &cZiel);
-    //Fallunterscheidung
-	switch ( cZiel ) {
-        	//Berlin
-		case 'B':
-          		printf("\nSie haben Berlin als Reiseziel gewaehlt.");
-		  	break;
-        	//Frankfurt
-		case 'F':
-          		printf("\nSie haben Frankfurt als Reiseziel gewaehlt.");
-		  	break;
-        //Augsburg
-		case 'A':
-          printf("\nSie haben Augsburg als Reiseziel gewaehlt.");
-		  break;
-        //sonst
-		default:
-          printf("\nIhre Eingabe war nicht korrekt. \nReisziel nicht vorhanden.\n\n");
-		  break;
-	}
-  } while ( cZiel != 'B' && cZiel != 'F' && cZiel != 'A' );
-	
-    //falls gueltige Eingabe
-    do {
-    	printf ("\nWar Ihre Eingabe korrekt? Ja(1)/Nein(0)");
-        scanf(" %c", &cEingabe);
-    } while ( !( cEingabe == '0' || cEingabe == '1' ) );
- 
-    //falls Eingabe korrekt
-    if ( cEingabe == '1' ) {
-        //Fallunterscheidung zur Berechnung und Ausgabe des Fahrpreises
-	switch ( cZiel ) {
-          //Berlin
-	  case 'B':
-		iPreis += 75;
-                printf("\n\nEine Reise nach Berlin kostet 75 Euro.");
-		break;
-          //Frankfurt
-	  case 'F':
-		iPreis += 50;
-                printf("\n\nEine Reise nach Frankfurt kostet 50 Euro.");
-		break;
-        //Augsburg
-	  case 'A':
-		iPreis += 25;
-                printf("\n\nEine Reise nach Augsburg kostet 25 Euro.");
-		break;
-	  default:
-		break;
-	}     
-            //Benutzereingabe weiteres Ticket
-			do {
-				printf ("\n\nWollen Sie ein weiteres Ticket kaufen? Ja(1)/Nein(0)\n");
-				scanf(" %c", &cWeiteresTicket);
-			} while ( cWeiteresTicket != '0' && cWeiteresTicket != '1' );
-			
-			if ( cWeiteresTicket == '1' ) {
-				cEingabe = '0';
-				continue;
-			}
-    } 
-    //falls Eingabe nicht korrekt
-    else {
-        printf("\n\nBitte waehlen Sie Ihr Ticket erneut.\n");
+    if ( scanf(" %c", &cZiel) == 0 ) {
+      printf("\nUngueltige Eingabe!");
+      return 1;
     }
-	
-}
+ 
+    //Fallunterscheidung
+    switch ( cZiel ) {
+      //Berlin
+      case 'B':
+        printf("\nSie haben Berlin als Reiseziel gewaehlt.");
+        break;
+      //Frankfurt
+      case 'F':
+        printf("\nSie haben Frankfurt als Reiseziel gewaehlt.");
+        break;
+      //Augsburg
+      case 'A':
+        printf("\nSie haben Augsburg als Reiseziel gewaehlt.");
+        break;
+      default:
+        //sonst
+        printf("\nIhre Eingabe war nicht korrekt. \nReisziel nicht vorhanden.\n\n");
+        iEingabe = 0;
+        break;
+    }
+ 
+    //falls gueltige Eingabe
+    if ( cZiel == 'B' || cZiel == 'F' || cZiel == 'A' ) {
+        do {
+          printf ("\nWar Ihre Eingabe korrekt? Ja(1)/Nein(0)");
+          if ( scanf("%i", &iEingabe) == 0 ) {
+            printf("\nUngueltige Eingabe!");
+            return 1;
+          }
+        } while ( !(iEingabe == 0 || iEingabe == 1) );
+ 
+        //falls Eingabe korrekt
+        if ( iEingabe ) {
+          //Fallunterscheidung zur Berechnung und Ausgabe des Fahrpreises
+          switch ( cZiel ) {
+            //Berlin
+            case 'B':
+              printf("\n\nEine Reise nach Berlin kostet %hu Euro.", iPreisBerlin);
+              iGesamtpreis += iPreisBerlin;
+              break;
+            //Frankfurt
+            case 'F':
+              printf("\n\nEine Reise nach Frankfurt kostet %hu Euro.", iPreisFrankfurt);
+              iGesamtpreis += iPreisFrankfurt;
+              break;
+            //Augsburg
+            default: // case 3
+              printf("\n\nEine Reise nach Augsburg kostet %hu Euro.", iPreisAugsburg);
+              iGesamtpreis += iPreisAugsburg;
+              break;
+          }
+          
+          //Benutzereingabe weiteres Ticket
+          do {
+            printf ("\n\nWollen Sie ein weiteres Ticket kaufen? Ja(1)/Nein(0)\n");
+            if ( scanf("%i", &iEingabe) == 0 ) {
+              printf("\nUngueltige Eingabe!");
+              return 1;
+            }
+          } while ( !(iEingabe == 0 || iEingabe == 1) );
+          
+          iEingabe = !iEingabe;
+        }
+        //falls Eingabe nicht korrekt
+        else {
+          printf("\n\nBitte waehlen Sie Ihr Ticket erneut.\n");
+        }
+    }
+    
+    //falls ungueltige Eingabe    
+  } while ( !iEingabe ); 
+ 
  
 //Ausgabe des Gesamtpreises
-printf("\nVielen Dank fuer Ihren Einkauf. Der Gesamtpreis betraegt: %i Euro", iPreis);
+printf("\nVielen Dank fuer Ihren Einkauf. Der Gesamtpreis betraegt: %u Euro", iGesamtpreis);
 
 return 0;
 }
