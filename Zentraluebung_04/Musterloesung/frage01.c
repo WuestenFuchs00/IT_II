@@ -37,6 +37,17 @@
  *  | 0.001    | Bitte geben Sie die Schrittweite (Genauigkeit) der Annaeherung ein: |
  *  |          | Die Integration hat den Wert 1.951739                               |
  *  +----------+---------------------------------------------------------------------+
+ *
+ * Compile: 
+ *    gcc -Wall -std=gnu99 -pedantic <quelldatei.c> -lm -o <output.exe>
+ *
+ *    -std=c90 -pedantic
+ *    -std=c89 -pedantic
+ *    -std=c99 -pedantic
+ *    -std=gnu99 -pedantic
+ *
+ *    -lm : wird benötigt, um <math.h> einzubinden. Sonst gibts "Reference-Error" bzw. Verweisfehler.
+ *
  */
 #include <stdio.h>
 #include <math.h> //Einbinden von mathematischen Funktionen (z.B. sin(x), oder pow(x, y))
