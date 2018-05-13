@@ -52,51 +52,44 @@
 #include <math.h>
 
 int main () {
-  // Variablendeklaration
-  double dUntereGrenze, dObereGrenze;
-  double dSchrittweite; // °°Verwendet double (2x Genauigkeit) anstatt float (1x Genauigkeit)
-  double dZaehler, dFormel, dErgebnis = 0;
- 
-  //Eingaben
+  
+  //Variablendeklaration
+  float fUntereGrenze, fObereGrenze;
+  float fDX;
+  double fX, fA = 0;
+  
   printf("Bitte geben Sie die untere Grenze des Integrals ein:");
-  if ( scanf(" %f", &dUntereGrenze) == 0 ) {
-	printf("\nUnguletige Eingabe!");
-	return 1;
+  if ( scanf("%f", &fUntereGrenze) == 0 ) {
+    printf("\nUngueltige Eingabe!");
+    return 1;
   }
-
-  printf("\nBitte geben Sie die obere Grenze des Integrals ein:");
-  if ( scanf(" %f", &dObereGrenze) == 0 ) {
-	printf("\nUnguletige Eingabe!");
-	return 1;
+  
+  printf("Bitte geben Sie die obere Grenze des Integrals ein:");
+  if ( scanf("%f", &fObereGrenze) == 0 ) {
+    printf("\nUngueltige Eingabe!");
+    return 1;
   }
-
-  printf("\nBitte geben Sie die Schrittweite (Genauigkeit) der Annaeherung ein:"); 
-  if ( scanf(" %f", &dSchrittweite) == 0 ) {
-	printf("\nUnguletige Eingabe!");
-	return 1;
+  
+  printf("Bitte geben Sie die Schrittweite (Genauigkeit) der Annaeherung ein:");
+  if ( scanf("%f", &fDX) == 0 ) {
+    printf("\nUngueltige Eingabe!");
+    return 1;
   }
- 
+  
   /* Realisierung mittels WHILE-Schleife */
-  dZaehler = dUntereGrenze;
-  while ( dZaehler <= dObereGrenze ) {
-    // Formel y = ( sin(x)* x^3 ) / sqrt(7*x)
-	dFormel = sin(dZaehler) * pow(dZaehler,3) / sqrt(dZaehler*7); 
-    //Ergebnis = Flaeche unter der Kurve -> Wert von y*dx
-	dErgebnis += (dFormel * dSchrittweite);
-    //Erhöhung der Laufvariable um die Schrittweite
-	dZaehler += dSchrittweite;
+  fX = fUntereGrenze;  
+  while ( fX <= fObereGrenze ) {
+    fA += sin(fX) * pow(fX,3) / sqrt(fX*7) * fDX;
+    fX += fDX;
   }
   
   /* Realisierung mittels FOR-Schleife */
-  dErgebnis = 0;
-  for ( dZaehler = dUntereGrenze; dZaehler <= dObereGrenze; ) {
-	dErgebnis += ( sin(dZaehler) * pow(dZaehler,3) / sqrt(dZaehler*7) ) * dSchrittweite;
-	dZaehler += dSchrittweite;
+  fA = 0;
+  for ( fX = fUntereGrenze; fX <= fObereGrenze; fX = fX + fDX ) {
+    fA += sin(fX) * pow(fX,3) / sqrt(fX*7) * fDX;
   }
   
-  // Ausgabe des Ergebnisses
-  printf("\nDie Integration hat den Wert %lf", dErgebnis);
-  
+  printf("Die Integration hat den Wert %lf", fA);
   
   return 0;
 }
