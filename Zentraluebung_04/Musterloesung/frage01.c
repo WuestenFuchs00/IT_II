@@ -85,7 +85,13 @@ int main()
         //Erhöhung der Laufvariable um die Schrittweite
         fX += fDx;
     }
- 
+    
+    //FOR-Schleife
+    fErg = 0;
+    for ( fX = fUntereGrenze; fX <= fObereGrenze; fX = fX + fDx ) {
+      fErg += (sin(fX) * pow(fX, 3)) / sqrt(fX * 7) * fDx;
+    }
+    
     //Ausgabe in der Konsole
     printf("\nDie Integration hat den Wert %lf", fErg);
     return 0;

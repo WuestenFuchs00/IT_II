@@ -40,71 +40,76 @@
 
 int main () {
   
-  // Variableninitialisierung
-  short kaugummi, status; // half = 1/2 int = short
-  float preis = 0;
+  //Variableninitialisierung
+  unsigned short int iEingabe; // short = half = 1/2 int
+  float fPreis = 0;
   
-  // Benutzereingabe Nummer des gewuenschten Kaugummis
+  //Benutzereingabe Nummer des gewuenschten Kaugummis
   printf("Welchen Kaugummi wollen Sie?");
-  // Ueberpruefung ob scanf erfolgreich war
-  if ( scanf(" %hi", &kaugummi) <= 0 ) {
-	printf("\nUngueltige Eingabe!");
-	return 1;
+  //Ueberpruefung ob scanf erfolgreich war
+  if ( scanf("%hu", &iEingabe) == 0 ) {
+    printf("\nUngueltige Eingabe!");
+    return 1;
   }
-  // switch-case-Struktur zur Wahl des Kaugummis
-  switch ( kaugummi ) {
+  
+
+  //switch-case-Struktur zur Wahl des Kaugummis
+  switch ( iEingabe ) {
     //Spindel 0
     case 0:
-	  printf("\nWrigley's kostet 90 Cent.");
-	  preis = .9;
-	  break; 
+      printf("\nWrigley's kostet 90 Cent.");
+      fPreis = .9;
+      break;
     //Spindel 1
     case 1:
-	  printf("\nBig Red kostet 95 Cent.");
-	  preis = .95;
-	  break;
+      printf("\nBig Red kostet 95 Cent.");
+      fPreis = .95;
+      break;
     //Spindel 2
     case 2:
-	  printf("\nExtra kostet 70 Cent.");
-	  preis = .7;
-	  break;
+      printf("\nExtra kostet 70 Cent.");
+      fPreis = .7;
+      break; 
     //Spindel 3
-	case 3:
-	  printf("\nOrbit kostet 1 Euro.");
-	  preis = 1.;
-	  break;
+    case 3:
+      printf("\nOrbit kostet 1 Euro.");
+      fPreis = 1;
+      break; 
     //sonst
-	default:
-	  printf("\nUngueltige Eingabe!");
-	  preis = 0;
-	  return 1;
+    default:
+      printf("\nUngueltige Eingabe!");
+      break;
   }
  
-  // Falls zulaessige Eingabe
-  //Benutzereingabe Rabatt
-  printf("\nSind Sie Student(0), Mitarbeiter(1) oder Gast(2)?");
-  scanf(" %hi", &status);
-  // switch-case-Struktur zur Wahl des Rabattes
-  switch ( status  ) {
-	// Student
-    case 0:
-	  preis *= .5;
-	  printf("\nAls Student zahlen Sie bitte %.2f Euro.", preis);
-      break;
-	// Mitarbeiter
-    case 1:
-      preis *= .8;	
-      printf("\nAls Mitarbeiter zahlen Sie bitte %.2f Euro.", preis);
-	  break;
-    // Gast
-	case 2:
-	  printf("\nAls Gast zahlen Sie bitte %.2f Euro.", preis);
-	  break;
-	// sonst
-	default:
-	  printf("\nUngueltige Eingabe!");//Variableninitialisierung
-	  preis = 0;
-	  return 1;
+ //falls zulaessige Eingabe
+ if ( iEingabe >= 0 && iEingabe <= 3 ) {
+    //Benutzereingabe Rabatt
+    printf("\nSind Sie Student(0), Mitarbeiter(1) oder Gast(2)?");
+    if ( scanf("%hu", &iEingabe) == 0 ) {
+      printf("\nUngueltige Eingabe!");
+      return 1;
+    }
+    //switch-case-Struktur zur Wahl des Rabattes
+    switch ( iEingabe ) {
+      //Student
+      case 0:
+        fPreis *= .5;
+        printf("\nAls Student zahlen Sie bitte %.2f Euro.", fPreis);
+        break;         
+      //Mitarbeiter
+      case 1:
+        fPreis *= .8;
+        printf("\nAls Mitarbeiter zahlen Sie bitte %.2f Euro.", fPreis);
+        break; 
+      //Gast
+      case 2:
+        printf("\nAls Gast zahlen Sie bitte %.2f Euro.", fPreis);
+        break; 
+      //sonst
+      default:
+        printf("\nUngueltige Eingabe!");
+        break;
+    }
   }
   
   return 0;

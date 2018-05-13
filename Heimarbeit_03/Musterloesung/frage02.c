@@ -65,20 +65,22 @@ int main () {
    *
    */
   
-  int iErr;
-  
-  // Einlesen der Variablen
-  printf("Bitte geben Sie die Oberflaeche in Quadratmetern ein:");
-  iErr = scanf("%f", &fOflaeche);
+  //Deklaration der Variablen
+    int s = 0;
+
+  //Einlesen der Variablen  
+    printf("Bitte geben Sie die Oberflaeche in Quadratmetern ein:");
+    s += scanf("%f", &fOflaeche);
+             
+    printf("\nBitte geben Sie die maximal auf die Flaeche wirkende Kraft in kN ein:");
+    s += scanf("%f", &fmax);
         
-  printf("\nBitte geben Sie die maximal auf die Flaeche wirkende Kraft in kN ein:");
-  iErr += scanf("%f", &fmax);
-   
-  //Pruefen, ob zwei floats korrekt eingelesen wurden
-  if ( iErr < 2 ) {
-    printf("\nEinlesevorgang gescheitert!");
-    return 1; //Rückgabewert 1 bricht das Programm ab
-  }
+    //Pruefen, ob zwei floats korrekt eingelesen wurden
+    if(s!=2)
+    {
+        printf("\nEinlesevorgang gescheitert!");
+        return 1; //Rückgabewert 1 bricht das Programm ab
+    }
   
   /*
    * Frage 2, Aufgabe:
@@ -91,13 +93,13 @@ int main () {
   
   // Berechnungen
   // Druck = Kraft/Fläche
-  fDruck = fmax / fOflaeche;  // kPa
+  fDruck = (fmax*1000)/fOflaeche;
   
-  // kPa in bar ( 1 Pa = 1 N/m^2 , 1 bar = 10^5 Pa , 1 kPa = 1/100 bar)
-  fbar = fDruck / 100;
+  // kPa in bar
+  fbar = (fDruck/100000);
   
   // 0.1 bar pro 1m Tiefe mehr
-  fTiefe = fbar / 0.1;
+  fTiefe = (fbar/0.1);
   
   return 0;
 }

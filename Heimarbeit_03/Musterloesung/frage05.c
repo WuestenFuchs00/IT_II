@@ -43,54 +43,54 @@
  */
 #include <stdio.h>
 
-int main () {
-  
-  //Variableninitialisierung
-  unsigned int iUhrzeit;
-  char cGeschlecht;
- 
-  //Einlesen der Uhrzeit
-  printf("Bitte geben Sie die aktuelle Uhrzeit ein (volle Stunden):\n");
-  if ( scanf("%u", &iUhrzeit) == 0 ) {
-    printf("\nUngueltige Eingabe!");
-    return 1;
-  }   
- 
-  //Einlesen des Geschlechts
-  printf("\nBitte waehlen Sie Ihr Geschlecht:\n");
-  printf("Fuer weiblich bitte [w] eingeben\n");
-  printf("Fuer maennlich bitte [m] eingeben\n");
-  if ( scanf(" %c", &cGeschlecht) == 0 ) {
-    printf("\nUngueltige Eingabe!");
-    return 1;
-  }
- 
-  /*If-Else-Konstrukt für Ausgabe*/
-  //Eingegebene Zeit plausibel?
-  if ( iUhrzeit >= 0 && iUhrzeit <= 24 ) {
-    //Ausgabe für Frau
-    if ( cGeschlecht == 'w' ) {
-      if ( iUhrzeit < 10 ) printf("\nGuten Morgen Frau Amberg");
-      else if ( iUhrzeit >= 10 && iUhrzeit <= 18 ) printf("\nGuten Tag Frau Amberg");
-      else printf("\nGuten Abend Frau Amberg");
+int main()
+{
+    //Variableninitialisierung
+    int iTime = 0;
+    char cGeschlecht = 0;
+
+    //Einlesen der Uhrzeit
+    printf("Bitte geben Sie die aktuelle Uhrzeit ein (volle Stunden):\n");
+    scanf("%i", &iTime);   
+       
+    //Einlesen des Geschlechts
+    printf("\nBitte waehlen Sie Ihr Geschlecht:\n");
+    printf("Fuer weiblich bitte [w] eingeben\n");
+    printf("Fuer maennlich bitte [m] eingeben\n");
+    scanf(" %c", &cGeschlecht);
+     
+    /*If-Else-Konstrukt für Ausgabe*/
+    //Eingegebene Zeit plausibel?
+    if(iTime<24&&iTime>=0)
+        {
+            //Ausgabe für Frau
+            if(cGeschlecht=='w')  
+            {
+                if(iTime<10)
+                printf("\nGuten Morgen Frau Amberg");
+                else if(iTime<18)
+                printf("\nGuten Tag Frau Amberg");
+                else
+                printf("\nGuten Abend Frau Amberg");
+            }
+            //Ausgabe für Herr
+            else if(cGeschlecht=='m')  
+            {
+                if(iTime<10)
+                printf("\nGuten Morgen Herr Amberg");
+                else if(iTime<18)
+                printf("\nGuten Tag Herr Amberg");
+                else
+                printf("\nGuten Abend Herr Amberg");
+            }
+            //Wenn weder Mann noch Frau
+            else
+            printf("\nUngueltiges Geschlecht!");
+       
     }
-    //Ausgabe für Herr
-    else if ( cGeschlecht == 'm' ) {
-      if ( iUhrzeit < 10 ) printf("\nGuten Morgen Herr Amberg");
-      else if ( iUhrzeit >= 10 && iUhrzeit <= 18 ) printf("\nGuten Tag Herr Amberg");
-      else printf("\nGuten Abend Herr Amberg");
-    }
-    //Wenn weder Mann noch Frau
-    else {
-      printf("\nUngueltiges Geschlecht!");
-      return 1;
-    } 
-  }
-  //Zeit nicht plausibel
-  else {
+    //Zeit nicht plausibel
+    else
     printf("\nUngueltige Uhrzeit!");
-    return 1;
-  }
-  
-  return 0;
+    
+    return 0;
 }
