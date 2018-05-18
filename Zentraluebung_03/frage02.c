@@ -40,6 +40,14 @@
  *  |          | Fussheizung: 0                                        |
  *  |          | Frontscheibenheizung: 0                               |
  *  +----------+-------------------------------------------------------+
+ *
+ * Compile: 
+ *    gcc -Wall -std=gnu99 -pedantic <quelldatei.c> -lm -o <output.exe>
+ *
+ *    -std=c90 -pedantic
+ *    -std=c89 -pedantic
+ *    -std=c99 -pedantic
+ *    -std=gnu99 -pedantic
  */
 #include <stdio.h>
 
