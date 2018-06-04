@@ -39,7 +39,7 @@
  * | Eingabe | Result                                                                               |
  * +---------+--------------------------------------------------------------------------------------+
  * | -2.5    | Anfangswert:                                                                         |
- * | 2-7     | Endwert:                                                                             |
+ * | 2.7     | Endwert:                                                                             |
  * | 0.015   | Schrittweite:                                                                        |
  * | 1       | Moechten Sie die Stelle des Maximums(1) oder das Integral(2) der Funktion berechnen? |
  * |         | Das Maximum liegt an der Stelle 2.69                                                 |
