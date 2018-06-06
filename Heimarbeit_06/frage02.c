@@ -14,7 +14,7 @@
  *   o Achten Sie auf die Adress-Abstände benachbarter Array Elemente. Was fällt Ihnen auf und wieso 
  *     verhält es sich so?
  *   o Es ist ein Befehl im Code enthalten, der nicht wirklich sinnvoll ist, da er keine Aktion ausführt. 
- *     Welcher ist es? = ___________
+ *     Welcher ist es? = piZeiger+2 (Im 2. Schritt)
  *
  * Erhalten:
  *
