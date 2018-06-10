@@ -28,75 +28,79 @@
  */
 #include <stdio.h>
 #define MAX 20
-
+  
 //Definiton des Structs
 typedef struct {
-  char bezeichnung[21];
-  unsigned int baujahr;
+    char bezeichnung[21];
+    unsigned int baujahr;
 } FAHRZEUG;
   
+
 //Ausgabefunktion
 void Ausgabe(FAHRZEUG *pFahrzeug, int iAnzahl) {
     for ( int i = 0; i < iAnzahl; i++ ) {
-	printf("\nBezeichnung: %s", pFahrzeug->bezeichnung);
-	printf("\nBaujahr: %u", pFahrzeug->baujahr);
-	pFahrzeug += 1;
+        printf("\nBezeichnung: %s", (pFahrzeug+i)->bezeichnung); // (*(pFahrzeug+i)).bezeichnung
+        printf("\nBaujahr: %u", (pFahrzeug+i)->baujahr);
     }
 }
+
  
 //Tauschfunktion
-void Tauschen(FAHRZEUG fahrzeuge[], int i, int iMin) {
-    FAHRZEUG tmp = fahrzeuge[i];
-    fahrzeuge[i] = fahrzeuge[iMin];
-    fahrzeuge[iMin] = tmp;
+void Tauschen(FAHRZEUG *pFahrzeug, int i, int iMin) {
+    FAHRZEUG tmp = *(pFahrzeug+i);
+    *(pFahrzeug+i) = *(pFahrzeug+iMin);
+    *(pFahrzeug+iMin) = tmp;    
 }
+
   
 //Sortierfunktion: Selection sort
-void Sortieren(FAHRZEUG fahrzeuge[], int iAnzahl) {
+void Sortieren(FAHRZEUG *pFahrzeug, int iAnzahl) {
     int iMin = 0;
     
     for ( int i = 0; i < iAnzahl-1; i++ ) {
         iMin = i;
         for ( int j = i+1; j < iAnzahl; j++ ) {
-            if ( fahrzeuge[j].baujahr < fahrzeuge[iMin].baujahr ) {
+            if ( (pFahrzeug+j)->baujahr < (pFahrzeug+iMin)->baujahr ) {
                 iMin = j;
             }
         }
-        Tauschen(fahrzeuge, i, iMin);
+        Tauschen(pFahrzeug, i, iMin);
     }
-    
-} 
+}
+
   
 //Beginn Hauptfunktion
 int main()
 {
-    //Variablendeklaration
-    int s = 0;
-    int i = 0;
+    //Variablendeklaration 
+    int s = 0, i = 0;
     FAHRZEUG fahrzeuge[MAX];
-  
+    FAHRZEUG *pFahrzeug = NULL;
+    
     //do-while-Schleife zum Speichern Daten
     do {
         printf ("Geben Sie die Fahrzeugdaten ein.");
          
         //Einlesen der Daten 
+        pFahrzeug = &fahrzeuge[s++];
+        
         printf("\nBitte geben Sie die Bezeichnung ein:");
-        scanf("%20s", fahrzeuge[s].bezeichnung);
+        scanf("%20s", pFahrzeug->bezeichnung); // (*pFahrzeug).bezeichnung
   
         printf("\nBitte geben Sie das Baujahr ein:");
-        scanf("%u", &fahrzeuge[s++].baujahr); 
-		
+        scanf("%u", &(pFahrzeug->baujahr)); // &(*pFahrzeug).baujahr
+        
         //Abfrage, ob weiteres Fahrzeug hinzugefügt werden soll 
         printf ("\nWollen Sie ein weiteres Fahrzeug hinzufuegen? (Ja=1/Nein=0)\n");
         scanf("%i", &i);
     } while ( s < MAX && i );
     //Ende do-while
-  
+ 
     //Ausgabe der Fahrzeugdaten
     printf("\nFahrzeuge:");
     
     Sortieren(fahrzeuge, s);
     Ausgabe(fahrzeuge, s);
-    
+  
     return 0;
 }
