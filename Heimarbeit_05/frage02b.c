@@ -46,44 +46,43 @@
  *    -std=c99 -pedantic
  *    -std=gnu99 -pedantic
  */
-#include <stdio.h> 
+#include <stdio.h>
 
 int main () {
-	//Variablendeklaration
-	int i = 0;
-	int iMerk = 0;
-	int iEnd = 0; // überflüssig	
-	float fMeasure[3][6]; //Initialisierung von Array
-	
-	//Schleife zur Eingabe der Messwerte
-	do {
-		//Kontrolle, ob die Obergrenze des Arrays erreicht ist
-		if ( iMerk == 6 ) {
-			printf("Der maximale Speicherplatz fuer Messergebnisse ist erreicht.");
-			break;
-		}   
-		
-		//Benutzereingabe der Messwerte
-		printf("Bitte die %ite Drehzahl in U/min eingeben:\n", iMerk+1);
-		scanf("%f", &fMeasure[0][iMerk]);
+
+    //Variablendeklaration
+    int i = 0;
+    int iMerk = 0;
+    int iEnd = 0;
+        
+    float fMeasure[3][6];
+
+    //Schleife zur Eingabe der Messwerte
+    do {
+        //Kontrolle, ob die Obergrenze des Arrays erreicht ist
+        if ( iMerk == 6 ) {
+            printf("Der maximale Speicherplatz fuer Messergebnisse ist erreicht.");
+            break;
+        } 
+     
+        //Benutzereingabe der Messwerte
+        printf("Bitte die %ite Drehzahl in U/min eingeben:\n", i+1);
+        scanf("%f", &fMeasure[0][i]);
  
-		printf("Bitte das %ite Drehmoment in Nm eingeben:\n", iMerk+1);
-		scanf("%f", &fMeasure[1][iMerk]);
+        printf("Bitte das %ite Drehmoment in Nm eingeben:\n", i+1);
+        scanf("%f", &fMeasure[1][i]);
  
-		printf("Bitte die %ite Leistung in kW eingeben:\n", iMerk+1);
-		scanf("%f", &fMeasure[2][iMerk]);
+        printf("Bitte die %ite Leistung in kW eingeben:\n", i+1);
+        scanf("%f", &fMeasure[2][i++]);
  
-		iMerk += 1;
-		
-		//Nachfragen, ob weitere Drehzahl eingelesen werden soll
-		printf("Ist ein weiterer Messwert notwendig? ja (1) nein (0)\n");
-		scanf("%i", &i);
-	} while ( i );
-	
-	// iEnd ist ueberfluessig. Workaround um iEnd zumindest compiler-clean zu verwenden.
-	iEnd += iMerk;
-	
-	return 0;
+        //Nachfragen, ob weitere Drehzahl eingelesen werden soll
+        printf("Ist ein weiterer Messwert notwendig? ja (1) nein (0)\n");
+        scanf("%i", &iEnd);
+        
+        iMerk += 1;
+    } while ( iEnd );
+    
+    return 0;   
 }
 /*
  * Jede Messreihe (bestehend aus Drehzahl, Drehmoment, Leistung) ist eine Spalte 

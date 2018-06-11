@@ -78,82 +78,32 @@
  *    -std=c99 -pedantic
  *    -std=gnu99 -pedantic
  */
-#include <stdio.h> 
+//Variablendeklaration
 
-int main () {
-	//Variablendeklaration
-	int i,j = 0;
-	int iMerk = 0;
-	int iEnd = 0; // überflüssig	
-	float fMeasure[3][6]; //Initialisierung von Array
-	float fAverage[3]={0};
-	
-	//Schleife zur Eingabe der Messwerte
-	do {
-		//Kontrolle, ob die Obergrenze des Arrays erreicht ist
-		if ( iMerk == 6 ) {
-			printf("Der maximale Speicherplatz fuer Messergebnisse ist erreicht.");
-			break;
-		}
-		
-		//Benutzereingabe der Messwerte
-		printf("Bitte die %ite Drehzahl in U/min eingeben:\n", iMerk+1);
-		scanf("%f", &fMeasure[0][iMerk]);
+//Schleife zur Eingabe der Messwerte
  
-		printf("Bitte das %ite Drehmoment in Nm eingeben:\n", iMerk+1);
-		scanf("%f", &fMeasure[1][iMerk]);
+    //Kontrolle, ob die Obergrenze des Arrays erreicht ist
  
-		printf("Bitte die %ite Leistung in kW eingeben:\n", iMerk+1);
-		scanf("%f", &fMeasure[2][iMerk]);
+        printf("Der maximale Speicherplatz fuer Messergebnisse ist erreicht.");
  
-		iMerk += 1;
-		
-		//Nachfragen, ob weitere Drehzahl eingelesen werden soll
-		printf("Ist ein weiterer Messwert notwendig? ja (1) nein (0)\n");
-		scanf("%i", &i);
-	} while ( i );
+     
+    //Benutzereingabe der Messwerte
+    printf("Bitte die te Drehzahl in U/min eingeben:\n", );
+    scanf();
+ 
+    printf("Bitte das te Drehmoment in Nm eingeben:\n", );
+    scanf();
+ 
+    printf("Bitte die te Leistung in kW eingeben:\n", );
+    scanf();
+ 
+    //Nachfragen, ob weitere Drehzahl eingelesen werden soll
+    printf("Ist ein weiterer Messwert notwendig? ja (1) nein (0)\n");
+    scanf();
+    
+//Schleifen zum Berechnen der Mittelwerte
 
-	// iEnd ist ueberfluessig. Workaround um iEnd zumindest compiler-clean zu verwenden.
-	iEnd += iMerk;
-	
-	//Schleifen zum Berechnen der Mittelwerte
-	for ( i = 0; i < 3; i++ ) {
-		for ( j = 0; j < iMerk; j++ ) {
-			fAverage[i] += fMeasure[i][j];
-		}
-		fAverage[i] /= iMerk;
-	}	
-	//Ausgabe
-    printf("\nDie durchschnittliche Drehzahl betraegt: %.2f U/min", fAverage[0]);
-    printf("\nDas durchschnittliche Drehmoment betraegt: %.2f Nm", fAverage[1]);
-    printf("\nDie durchschnittliche Leistung betraegt: %.2f kW", fAverage[2]);
-	
-	return 0;
-}
-/*
- * Jede Messreihe (bestehend aus Drehzahl, Drehmoment, Leistung) ist eine Spalte 
- * des 3x6-Arrays, d.h. jede Messreihe ist ein 3-dim. Vektor in einer 3x6-Matrix.
- *
- *                     j-te Spalte
- *                    __          __     __ __
- *                   |              |   |     |
- *                   | Drehzahl j   |   | 0 j |
- *                   |              |   |     |
- *  j-te Messreihe = | Drehmoment j | = | 1 j |
- *                   |              |   |     |
- *                   | Leistung j   |   | 2 j |
- *                   |__          __|   |__ __|
- *
- * j = Index der Spalten, 0 <= j <= 5
- *
- *  __                                                                                     __
- * |                                                                                         |
- * | Drehzahl-0     Drehzahl-1     Drehzahl-2     Drehzahl-3     Drehzahl-4     Drehzahl-5   |
- * |                                                                                         |
- * | Drehmoment-0   Drehmoment-1   Drehmoment-2   Drehmoment-3   Drehmoment-4   Drehmoment-5 |
- * |                                                                                         |
- * | Leistung-0     Leistung-1     Leistung-2     Leistung-3     Leistung-4     Leistung-5   |
- * |                                                                                         |
- * |__                                                                                     __|
- *
- */
+//Ausgabe
+    printf("\nDie durchschnittliche Drehzahl betraegt:  U/min", );
+    printf("\nDas durchschnittliche Drehmoment betraegt:  Nm", );
+    printf("\nDie durchschnittliche Leistung betraegt:  kW", );

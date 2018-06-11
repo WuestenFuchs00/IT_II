@@ -1,7 +1,7 @@
 /**
  * Heimarbeit 05
  *
- * Frage 2
+ * Frage 2,3
  *
  * Ausgangssituation:
  *
@@ -38,6 +38,38 @@
  * | 0       | Ist ein weiterer Messwert notwendig? ja (1) nein (0)       |
  * +---------+------------------------------------------------------------+
  *
+ *
+ * Aufgabe (Frage 3):
+ *
+ * Berechnen Sie nun jeweils das arithmetische Mittel der (höchstens sechs) Messreihen und geben 
+ * Sie die Ergebnisse in der geforderten Form aus.
+ * 
+ * Folgende Variablen und Arrays wurden zusätzlich zu denen in Teilaufgabe 2 bereits initialisiert.
+ *   int j = 0;
+ *   float fMeasure[3][6];
+ *   float fAverage[3] = {0};
+ *
+ * Die Werte für fMeasure sind bereits erfolgreich eingelesen worden.
+ *
+ * Zum Beispiel:
+ *
+ * +----------+------------------------------------------------------------+
+ * | Eingabe  | Result                                                     |
+ * +----------+------------------------------------------------------------+
+ * | 1587.12  | Bitte die 1te Drehzahl in U/min eingeben:                  |
+ * | 80.87    | Bitte das 1te Drehmoment in Nm eingeben:                   |
+ * | 20.123   | Bitte die 1te Leistung in kW eingeben:                     |
+ * | 1        | Ist ein weiterer Messwert notwendig? ja (1) nein (0)       |
+ * | 6000.789 | Bitte die 2te Drehzahl in U/min eingeben:                  |
+ * | 190.488  | Bitte das 2te Drehmoment in Nm eingeben:                   |
+ * | 320.222  | Bitte die 2te Leistung in kW eingeben:                     |
+ * | 0        | Ist ein weiterer Messwert notwendig? ja (1) nein (0)       |
+ * |          |                                                            |
+ * |          | Die durchschnittliche Drehzahl betraegt: 3793.95 U/min     |
+ * |          | Das durchschnittliche Drehmoment betraegt: 135.68 Nm       |
+ * |          | Die durchschnittliche Leistung betraegt: 170.17 kW         |
+ * +----------+------------------------------------------------------------+
+ *
  * Compile: 
  *    gcc -Wall -std=gnu99 -pedantic <quelldatei.c> -lm -o <output.exe>
  *
@@ -46,44 +78,57 @@
  *    -std=c99 -pedantic
  *    -std=gnu99 -pedantic
  */
-#include <stdio.h> 
+#include <stdio.h>
 
 int main () {
-	//Variablendeklaration
-	int i = 0;
-	int iMerk = 0;
-	int iEnd = 0; // überflüssig	
-	float fMeasure[3][6]; //Initialisierung von Array
-	
-	//Schleife zur Eingabe der Messwerte
-	do {
-		//Kontrolle, ob die Obergrenze des Arrays erreicht ist
-		if ( iMerk == 6 ) {
-			printf("Der maximale Speicherplatz fuer Messergebnisse ist erreicht.");
-			break;
-		}   
-		
-		//Benutzereingabe der Messwerte
-		printf("Bitte die %ite Drehzahl in U/min eingeben:\n", iMerk+1);
-		scanf("%f", &fMeasure[0][iMerk]);
+
+    //Variablendeklaration
+    int i = 0, j = 0;
+    int iMerk = 0;
+    int iEnd = 0;
+        
+    float fMeasure[3][6];
+    float fAverage[3] = {0};
+
+    //Schleife zur Eingabe der Messwerte
+    do {
+        //Kontrolle, ob die Obergrenze des Arrays erreicht ist
+        if ( iMerk == 6 ) {
+            printf("Der maximale Speicherplatz fuer Messergebnisse ist erreicht.");
+            break;
+        } 
+     
+        //Benutzereingabe der Messwerte
+        printf("Bitte die %ite Drehzahl in U/min eingeben:\n", i+1);
+        scanf("%f", &fMeasure[0][i]);
  
-		printf("Bitte das %ite Drehmoment in Nm eingeben:\n", iMerk+1);
-		scanf("%f", &fMeasure[1][iMerk]);
+        printf("Bitte das %ite Drehmoment in Nm eingeben:\n", i+1);
+        scanf("%f", &fMeasure[1][i]);
  
-		printf("Bitte die %ite Leistung in kW eingeben:\n", iMerk+1);
-		scanf("%f", &fMeasure[2][iMerk]);
+        printf("Bitte die %ite Leistung in kW eingeben:\n", i+1);
+        scanf("%f", &fMeasure[2][i++]);
  
-		iMerk += 1;
-		
-		//Nachfragen, ob weitere Drehzahl eingelesen werden soll
-		printf("Ist ein weiterer Messwert notwendig? ja (1) nein (0)\n");
-		scanf("%i", &i);
-	} while ( i );
-	
-	// iEnd ist ueberfluessig. Workaround um iEnd zumindest compiler-clean zu verwenden.
-	iEnd += iMerk;
-	
-	return 0;
+        //Nachfragen, ob weitere Drehzahl eingelesen werden soll
+        printf("Ist ein weiterer Messwert notwendig? ja (1) nein (0)\n");
+        scanf("%i", &iEnd);
+        
+        iMerk += 1;
+    } while ( iEnd );
+    
+    //Schleifen zum Berechnen der Mittelwerte
+    for ( i = 0; i < 3; i++ ) {
+        for ( j = 0; j < iMerk; j++ ) {
+            fAverage[i] += fMeasure[i][j];
+        }
+        fAverage[i] /= iMerk;
+    }
+
+    //Ausgabe
+    printf("\nDie durchschnittliche Drehzahl betraegt: %.2f U/min", fAverage[0]);
+    printf("\nDas durchschnittliche Drehmoment betraegt: %.2f Nm", fAverage[1]);
+    printf("\nDie durchschnittliche Leistung betraegt: %.2f kW", fAverage[2]);
+    
+    return 0;   
 }
 /*
  * Jede Messreihe (bestehend aus Drehzahl, Drehmoment, Leistung) ist eine Spalte 
