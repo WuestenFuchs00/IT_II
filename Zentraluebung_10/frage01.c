@@ -86,6 +86,12 @@
  * |          | Formatierte Eingabe. Analog zu scanf, nur dass der Stream gewählt       |
  * |          | werden kann. Der Stream ist: stdin, stdout, stderr.                     |
  * +----------+-------------------------------------------------------------------------+
+ * | scanf    | int scanf(const char * format, ...)                                     |
+ * |          |                                                                         |
+ * |          | Formatierete Eingabe. Liest formatierte Inputs aus dem stdin-Stream.    |
+ * |          | Ist äquivalent zu:                                                      |
+ * |          |     fscanf(stdin, ...) == scanf(...)                                    |
+ * +----------+-------------------------------------------------------------------------+
  * | fwrite   | size_t fwrite(const void *puffer, size_t size, size_t n, FILE *stream)  |
  * |          |                                                                         |
  * |          | Blockweise Ausgabe. Schreibt n Bloecke jeweils der Groesse size von der |
@@ -123,7 +129,7 @@
  * |          | feof testet auf EOF, d.h. ob Ende einer Datei (Stream) erreicht ist.    |
  * |          |                                                                         |
  * |          | Rueckgabewert (int):                                                    |
- * |          | Liefert 0 zurueck, solange Dateiende nicht erreicht ist. Sonst 0.       |
+ * |          | Liefert 0 zurueck, solange Dateiende nicht erreicht ist. Sonst nicht 0  |
  * +----------+-------------------------------------------------------------------------+
  * 
  * Compile: 
@@ -193,7 +199,6 @@ int main()
       
     while(feof(Datei) == 0)
     {
-         
         if(fscanf(Datei, "%s" "%i", Person[i].szNachname, &Person[i].iGeburtsjahr) == 0)
         {
             printf("Fehler beim Einlesen der Datei!");

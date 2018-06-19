@@ -129,7 +129,7 @@
  * |          | feof testet auf EOF, d.h. ob Ende einer Datei (Stream) erreicht ist.    |
  * |          |                                                                         |
  * |          | Rueckgabewert (int):                                                    |
- * |          | Liefert 0 zurueck, solange Dateiende nicht erreicht ist. Sonst 0.       |
+ * |          | Liefert 0 zurueck, solange Dateiende nicht erreicht ist. Sonst nicht 0  |
  * +----------+-------------------------------------------------------------------------+
  * 
  * Compile: 
@@ -145,18 +145,17 @@
    
 typedef struct
 {
-      
     char szNachname[MAX];
-    int iGeburtsjahr;
-      
-}PERSON;
+    int iGeburtsjahr; 
+} PERSON;
+
    
 int main()
 {
       
     //Dateien öffnen/erstellen
     FILE* Datei;
-    if((Datei = fopen("neutst.of", "w")) == NULL)
+    if((Datei = fopen("neutst.of", "a+")) == NULL)
     {
         printf("Datei konnte nicht erstellt werden");
         return 1;
@@ -175,7 +174,7 @@ int main()
         if(iEintrag == 1)
         {
             printf("\nNachname Geburtsjahr?\n\n");
-            scanf("%s" "%i", Person[i].szNachname,  &Person[i].iGeburtsjahr);
+            scanf("%s" "%i", Person[i].szNachname, &Person[i].iGeburtsjahr);
    
             //Schreiben in Datei
             fprintf(Datei, "\n\n%s %i", Person[i].szNachname, Person[i].iGeburtsjahr);
@@ -186,29 +185,25 @@ int main()
    
     //Datei schliessen
     fclose(Datei);
-     
+	
     //Datei öffnen im Lesemodus
-   
     if((Datei = fopen("neutst.of", "r")) == NULL)
     {
         printf("Datei konnte nicht erstellt werden");
         return 1;
     }
-     
-    //Auslesen aus Datei
    
+    //Auslesen aus Datei	
     i=0;
       
-    while(feof(Datei) == 0)
-    {
-         
+    while((feof(Datei)) == 0)
+    {         
         if(fscanf(Datei, "%s" "%i", Person[i].szNachname, &Person[i].iGeburtsjahr) == 0)
         {
             printf("Fehler beim Einlesen der Datei!");
             return 1;
-        }
-   
-    ++i;
+        }   
+		++i;
     }
    
     for(j = 0; j < i; j++)

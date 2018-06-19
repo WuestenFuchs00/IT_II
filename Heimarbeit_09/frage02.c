@@ -1,32 +1,29 @@
 /**
- * Zentralübung 10
+ * Heimarbeit 9
  *
- * Frage 1
+ * Frage 2
  *
- * Schreiben Sie ein vollständiges C-Programm welches Personendaten erfasst und in eine Textdatei schreibt.
- * Erfasst werden sollen der Nachname und das Geburtsjahr der Personen. Es soll zunächst eine Textdatei 
- * erstellt werden und der Nutzer gefragt werden, ob er Daten eingeben möchte. Nachdem Daten eingegeben 
- * wurden, werden alle Einträge der Textdatei ausgeben.
+ * Der Hersteller eines Sportwagens möchte die Messergebnisse seiner Testfahrt grafisch dargestellt haben. 
+ * Bei der Testfahrt wird alle 5 Sekunden, die aktuelle Geschwindigkeit in die Textdatei "vmess.txt" 
+ * geschrieben, diese sieht in etwa so aus:
  *
- * Zum Beispiel:
+ * << vmess.JPG >>
  *
- * +---------------+-------------------------------------------------------------------+
- * | Eingabe       | Result                                                            |
- * +---------------+-------------------------------------------------------------------+
- * | 1             | Wollen Sie einen Eintrag in ihr Adressbuch machen?  Ja(1) Nein(0) |
- * | Amberg 1977   | Nachname Geburtsjahr?                                             |
- * | 1             |                                                                   |
- * | Schmidt 1965  | Wollen Sie einen Eintrag in ihr Adressbuch machen?  Ja(1) Nein(0) |
- * | 0             | Nachname Geburtsjahr?                                             |
- * |               |                                                                   |
- * |               | Wollen Sie einen Eintrag in ihr Adressbuch machen?  Ja(1) Nein(0) |
- * |               |                                                                   |
- * |               | 1. Eintrag:                                                       |
- * |               | Amberg, 1977                                                      |
- * |               |                                                                   |
- * |               | 2. Eintrag:                                                       |
- * |               | Schmidt, 1965                                                     |
- * +---------------+-------------------------------------------------------------------+
+ * Lesen Sie aus dieser Datei die Geschwindigkeitswerte aus und speichern Sie diese in einem Integer-Array. 
+ * Übergeben Sie dieses Array anschließend der Funktion "plotter", welche eine grafische Ausgabe der 
+ * Messwerte erzeugt. Die Funktion plotter ist bereits in den Codeschnipseln implementiert.
+ *
+ * Hinweis:
+ *   o Die auszulesende Zahl hat immer drei Ziffern
+ *   o Zahlen sind in der ASCII Tabelle um den Wert 48 nach rechts verschoben. Beachten Sie dies beim 
+ *     Auslesen der Zahl
+ *   o Tipp: Da die Zahl aus drei Ziffern besteht, muss sie durch Multiplikation/Addition zusammengesetzt 
+ *     werden
+ *   o Binden Sie die string.h ein
+ *   o Strings sollen maximal 200 Zeichen lang sein!
+ *   o Die Datei aus der auszulesen ist, ist bereits hinterlegt. Sie heisst "vmess.txt"
+ *   o Die Funktion Plotter ist bereits in den Codeschnipseln implementiert. Machen Sie sich damit 
+ *     vertraut, was Sie dieser übergeben müssen.
  *
  * I/O-Operationen in <stdio.h>
  * 
@@ -129,7 +126,7 @@
  * |          | feof testet auf EOF, d.h. ob Ende einer Datei (Stream) erreicht ist.    |
  * |          |                                                                         |
  * |          | Rueckgabewert (int):                                                    |
- * |          | Liefert 0 zurueck, solange Dateiende nicht erreicht ist. Sonst 0.       |
+ * |          | Liefert 0 zurueck, solange Dateiende nicht erreicht ist. Sonst nicht 0  |
  * +----------+-------------------------------------------------------------------------+
  * 
  * Compile: 
@@ -140,84 +137,77 @@
  *    -std=c99 -pedantic
  *    -std=gnu99 -pedantic
  */
-#include <stdio.h>
-#define MAX 30
+//Header
+#include<stdio.h>
+#include<string.h>
    
-typedef struct
+//Funktion Plotter
+ 
+void plotter(int* iArray)
 {
-      
-    char szNachname[MAX];
-    int iGeburtsjahr;
-      
-}PERSON;
-   
-int main()
-{
-      
-    //Dateien öffnen/erstellen
-    FILE* Datei;
-    if((Datei = fopen("neutst.of", "w")) == NULL)
-    {
-        printf("Datei konnte nicht erstellt werden");
-        return 1;
-    }
-   
-    PERSON Person[5];
     int i = 0;
     int j = 0;
-    int iEintrag = 0;
+    int ivalue = 0;
 
-    do
-    {        
-        printf("Wollen Sie einen Eintrag in ihr Adressbuch machen?  Ja(1) Nein(0)");
-        scanf("%i", &iEintrag);
-   
-        if(iEintrag == 1)
-        {
-            printf("\nNachname Geburtsjahr?\n\n");
-            scanf("%s" "%i", Person[i].szNachname,  &Person[i].iGeburtsjahr);
-   
-            //Schreiben in Datei
-            fprintf(Datei, "\n\n%s %i", Person[i].szNachname, Person[i].iGeburtsjahr);
-            ++i;
-        }
-   
-    }while(iEintrag);
-   
-    //Datei schliessen
-    fclose(Datei);
+    printf("^");
      
-    //Datei öffnen im Lesemodus
-   
-    if((Datei = fopen("neutst.of", "r")) == NULL)
+    for(j = 18; j >= 0; j--)
     {
-        printf("Datei konnte nicht erstellt werden");
-        return 1;
-    }
-     
-    //Auslesen aus Datei
+        printf("\n|");
    
-    i=0;
-      
-    while(feof(Datei) == 0)
-    {
-         
-        if(fscanf(Datei, "%s" "%i", Person[i].szNachname, &Person[i].iGeburtsjahr) == 0)
+        for(i = 0; i <= 12; i++)
         {
-            printf("Fehler beim Einlesen der Datei!");
-            return 1;
+            ivalue = (iArray[i])*0.06;
+              
+            if(ivalue == j)
+            {
+                printf("*");
+            }
+            else
+            {
+                if(j==0 && i!=12) printf("-");
+                if(j==0 && i==12) printf(">");
+                if(j!=0) printf(" ");
+            }
         }
+     }   
+}
+    
+//Main
+int main()
+{
+    //Variablendeklaration
+	char sZeile[200];
+	int iGeschwindigkeit[13];
+	int i = 0;
+	
+	char *pc;
+	FILE *Datei;
    
-    ++i;
-    }
-   
-    for(j = 0; j < i; j++)
-    {
-        printf("\n\n%i. Eintrag:\n%s, %i", j+1, Person[j].szNachname, Person[j].iGeburtsjahr);
-    }
-   
-    //Datei schliessen
-    fclose(Datei);
+    //Öffnen der Datei
+    if ( (Datei = fopen("vmess.txt", "r")) == NULL ) {
+		printf("Diese Datei kann nicht geoeffnet werden.");
+		return 1;
+	}
+	
+	/* Lesen solange EOF noch nicht erreicht ist */
+	while ( feof(Datei) == 0 ) {
+		//Einlesen des Strings
+		if ( fgets(sZeile, 200, Datei) != 0 ) {
+			//Auslesen der benötigten Werte aus dem String
+			if ( (pc = strchr(sZeile, 45)) != NULL ) { // Minuszeichen (-) hat ASCII 45
+				pc += 2; // Zeiger auf erste Ziffer der Geschwindigkeit
+				iGeschwindigkeit[i] = (*pc-48)*100 + (*(pc+1)-48)*10 + (*(pc+2)-48);
+				i += 1;
+			}
+		}
+	}
+	   
+    //Plotten der Funktion
+	plotter(iGeschwindigkeit); 
+        
+    //Schließen der Datei
+	fclose(Datei); 
       
-    return 0;
+    return 0;   
 }

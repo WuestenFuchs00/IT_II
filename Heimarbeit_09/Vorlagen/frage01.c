@@ -1,32 +1,27 @@
 /**
- * Zentralübung 10
+ * Heimarbeit 9
  *
  * Frage 1
  *
- * Schreiben Sie ein vollständiges C-Programm welches Personendaten erfasst und in eine Textdatei schreibt.
- * Erfasst werden sollen der Nachname und das Geburtsjahr der Personen. Es soll zunächst eine Textdatei 
- * erstellt werden und der Nutzer gefragt werden, ob er Daten eingeben möchte. Nachdem Daten eingegeben 
- * wurden, werden alle Einträge der Textdatei ausgeben.
+ * Schreiben Sie ein vollständiges C-Programm, das aus der externen Datei "Messdaten.txt" eine Messwertreihe
+ * einliest, nach dem größten und kleinsten Wert sucht und diese anschließend in einer neuen Datei speichert.
+ * Zusätzlich sollen die gespeicherten Werte ausgegeben werden (siehe Beispiel).
+ * Die externe Datei "Messdaten.txt" enthält in jeder Zeile jeweils den Zeitpunkt der Messung in Sekunden, 
+ * sowie den Messwert in folgender Formatierung:
+ *
+ * << Messdaten.JPG >>
+ *
+ * Hinweis:
+ *   o Die Datei aus der auszulesen ist, ist bereits hinterlegt. Sie heisst "Messdaten.txt".
  *
  * Zum Beispiel:
  *
- * +---------------+-------------------------------------------------------------------+
- * | Eingabe       | Result                                                            |
- * +---------------+-------------------------------------------------------------------+
- * | 1             | Wollen Sie einen Eintrag in ihr Adressbuch machen?  Ja(1) Nein(0) |
- * | Amberg 1977   | Nachname Geburtsjahr?                                             |
- * | 1             |                                                                   |
- * | Schmidt 1965  | Wollen Sie einen Eintrag in ihr Adressbuch machen?  Ja(1) Nein(0) |
- * | 0             | Nachname Geburtsjahr?                                             |
- * |               |                                                                   |
- * |               | Wollen Sie einen Eintrag in ihr Adressbuch machen?  Ja(1) Nein(0) |
- * |               |                                                                   |
- * |               | 1. Eintrag:                                                       |
- * |               | Amberg, 1977                                                      |
- * |               |                                                                   |
- * |               | 2. Eintrag:                                                       |
- * |               | Schmidt, 1965                                                     |
- * +---------------+-------------------------------------------------------------------+
+ * +--------------------------------------------------+
+ * | Result                                           |
+ * +--------------------------------------------------+
+ * | Kleinster Messwert: 0.2456 zur Zeit 1 Sekunden   |
+ * | Groesster Messwert: 51.5248 zur Zeit 20 Sekunden | 
+ * +--------------------------------------------------+
  *
  * I/O-Operationen in <stdio.h>
  * 
@@ -129,7 +124,7 @@
  * |          | feof testet auf EOF, d.h. ob Ende einer Datei (Stream) erreicht ist.    |
  * |          |                                                                         |
  * |          | Rueckgabewert (int):                                                    |
- * |          | Liefert 0 zurueck, solange Dateiende nicht erreicht ist. Sonst 0.       |
+ * |          | Liefert 0 zurueck, solange Dateiende nicht erreicht ist. Sonst nicht 0  |
  * +----------+-------------------------------------------------------------------------+
  * 
  * Compile: 
@@ -140,84 +135,75 @@
  *    -std=c99 -pedantic
  *    -std=gnu99 -pedantic
  */
-#include <stdio.h>
-#define MAX 30
-   
-typedef struct
-{
-      
-    char szNachname[MAX];
-    int iGeburtsjahr;
-      
-}PERSON;
-   
+#include<stdio.h>
+#define MAX 50
+     
 int main()
 {
-      
-    //Dateien öffnen/erstellen
-    FILE* Datei;
-    if((Datei = fopen("neutst.of", "w")) == NULL)
-    {
-        printf("Datei konnte nicht erstellt werden");
-        return 1;
-    }
-   
-    PERSON Person[5];
+       
     int i = 0;
     int j = 0;
-    int iEintrag = 0;
+    float fMessreihe[MAX];
+    float fmin = 0;
+    float fmax = 0;
+    int iZeit[MAX];
+    int izeitmax = 0;
+    int izeitmin = 0;
 
-    do
-    {        
-        printf("Wollen Sie einen Eintrag in ihr Adressbuch machen?  Ja(1) Nein(0)");
-        scanf("%i", &iEintrag);
-   
-        if(iEintrag == 1)
-        {
-            printf("\nNachname Geburtsjahr?\n\n");
-            scanf("%s" "%i", Person[i].szNachname,  &Person[i].iGeburtsjahr);
-   
-            //Schreiben in Datei
-            fprintf(Datei, "\n\n%s %i", Person[i].szNachname, Person[i].iGeburtsjahr);
-            ++i;
-        }
-   
-    }while(iEintrag);
-   
-    //Datei schliessen
-    fclose(Datei);
+    //File oeffnen im Lesemodus
      
-    //Datei öffnen im Lesemodus
    
-    if((Datei = fopen("neutst.of", "r")) == NULL)
+    /*Einlesen der Messwerte*/
+    //solange nicht das Ende des Files erreicht ist
+    while( == 0)
     {
-        printf("Datei konnte nicht erstellt werden");
-        return 1;
+   
+        //Zeit einlesen
+       
+   
+        //Messwert einlesen
+        
+          
+        ++i;
     }
      
-    //Auslesen aus Datei
-   
-    i=0;
-      
-    while(feof(Datei) == 0)
+    //Maximal und Minimalwerte auf den ersten Messwert setzen
+ 
+     
+    //Suchen nach groesstem und kleinstem Wert  
+    for()
     {
-         
-        if(fscanf(Datei, "%s" "%i", Person[i].szNachname, &Person[i].iGeburtsjahr) == 0)
+           
+    }
+      
+    //Schliessen der Lese-Datei
+    
+      
+    //File erstellen im Schreibmodus
+     
+        
+    //Schreiben in Datei
+    (, "Kleinster Messwert:  zur Zeit  Sekunden", , );
+    (, "\nGroesster Messwert:  zur Zeit  Sekunden", , );
+      
+    //Schliessen der Schreib-Datei
+     
+      
+      
+    /*TEST, OB SCHREIBEN GEKLAPPT HAT*/
+     
+      
+    char string[100];
+    while( == 0)
+    {         
+        if(fgets( != 0)
         {
-            printf("Fehler beim Einlesen der Datei!");
-            return 1;
-        }
-   
-    ++i;
+            printf("", );
+        }        
     }
-   
-    for(j = 0; j < i; j++)
-    {
-        printf("\n\n%i. Eintrag:\n%s, %i", j+1, Person[j].szNachname, Person[j].iGeburtsjahr);
-    }
-   
-    //Datei schliessen
-    fclose(Datei);
       
+    //Schliessen des Tests
+     
+        
     return 0;
 }
