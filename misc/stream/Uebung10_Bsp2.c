@@ -1,5 +1,5 @@
 /**
- * Uebung10_Bsp2.c
+ * Uebung10_Bsp2.c - Zeilenweise Ein/Ausgabe
  */
 #include <stdio.h>
 #define MAX 81

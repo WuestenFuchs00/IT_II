@@ -59,7 +59,7 @@ typedef struct { // anonymous struct
 	struct KNOTEN *pNext; // forward-declaration
 } KNOTEN;
 
-typedef struct {
+typedef struct KNOTEN {
 	KNOTEN *pFirst;
 	int iAnzahl;
 } LISTE;

@@ -39,6 +39,12 @@
  * |          |      t : textmode, translate mode ("rt", "at+")                         |
  * |          |      b : binary mode ("rb", "ab+")                                      |
  * |          |                                                                         |
+ * |          |   Zugriffsart:                                                          |
+ * |          |     o w : Existierender Dateinhalt geht bei jedem Schreiben verloren.   |
+ * |          |           Datei wird geaendert bzw. neu geschrieben. (write)            |
+ * |          |     o a : Existierender Datei bleibt erhalten. Neuer Inhalt wird nur    |
+ * |          |           am Dateiende geschrieben bzw. angehaengt. (append)            |
+ * |          |                                                                         |
  * |          | Rueckgabewert:                                                          |
  * |          |   ZEIGER auf Datei. Sonst NULL, wenn Datei nicht erstellt werden kann   |
  * |          |   oder Datei nicht existiert.
@@ -56,9 +62,11 @@
  * +----------+-------------------------------------------------------------------------+
  * | fgets    | char *fgets(char * str, int N, FILE * stream)                           |
  * |          |                                                                         |
- * |          | Zeilenweise Lesen. Liest vom Stream maximale N Zeichenanzahl.           |
- * |          | Liest eine Zeile vom Stream nur bis zum naechsten Newline (\n).         |
- * |          | Rueckgabewert ist ein (char *)Pointer auf str.                          |
+ * |          | Zeilenweise Lesen. Liest vom Stream <stream>maximale N Zeichenanzahl.   |
+ * |          |                                                                         |
+ * |          | Liest eine Zeile (N Zeichen) vom Stream <stream> nur bis zum naechsten  |
+ * |          | Newline (\n) und speichert das Gelesene in <str>.                       |
+ * |          | Rueckgabewert ist ein (char *)Pointer auf <str>.                        |
  * +----------+-------------------------------------------------------------------------+
  * | fgetc    | int fgetc(FILE * stream)                                                |
  * |          |                                                                         |
@@ -74,8 +82,7 @@
  * |          | Formatierte Ausgabe. Analog zu printf, nur dass der Stream gewählt      |
  * |          | werden kann. Der Stream ist: stdin, stdout, stderr.                     |
  * |          |                                                                         |
- * |          | fprintf(stdout, "...")  ist-gleich                                      |
- * |          |  printf("...")                                                  |
+ * |          | fprintf(stdout, "...")  ist-gleich  printf("...")                       |
  * +----------+-------------------------------------------------------------------------+
  * | fscanf   | int fprintf(FILE * stream, const char * format, ...)                    |
  * |          |                                                                         |

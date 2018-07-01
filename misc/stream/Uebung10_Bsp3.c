@@ -1,5 +1,5 @@
 /**
- * Uebung10_Bsp3.c
+ * Uebung10_Bsp3.c - Blockweise Ein/Ausgabe
  */
 #include <stdio.h>
 typedef struct {
@@ -21,7 +21,7 @@ int main() {
 	fclose(pDatei);
 	
 	for ( i = 0; i < 5; i++ ) {
-		printf(" x: %i \t y: %i \n", AKontrolle[i].iX, AKontrolle[i].iY);
+		fprintf(stdout, " x: %i \t y: %i \n", AKontrolle[i].iX, AKontrolle[i].iY);
 		//printf(" x: %i \t y: %i \n", (AKontrolle+i)->iX, (AKontrolle+i)->iY);
 	}
 	return 0;
