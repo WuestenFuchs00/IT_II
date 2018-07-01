@@ -17,7 +17,8 @@
  * |               const char* s2, uint n); | s1 = Ziel, s2 = Quelle                               |
  * |                                        | Liefert Zeiger auf String s1 (Ziel) zurueck.         |
  * +----------------------------------------+------------------------------------------------------+
- * | char* strcpy(char* s1, const char* s2) | Kopiert String s2 (Quelle) nach String s1 (Ziel).    |
+ * | char* strcpy(char* s1, const char* s2) | Kopiert String s2 (Quelle) nach String s1 (Ziel),    |
+ * |                                        | inkl. das Endzeichen '\0'.
  * |                                        | Liefert Zeiger auf String s1 (Ziel) zurueck.         | 
  * +----------------------------------------+------------------------------------------------------+
  * | char* strstr(const char* s1,           | Sucht in s1 nach einem Teilstring s2. Liefert die    |
@@ -53,10 +54,11 @@
  * |          |                                                                         |
  * |          | Zeichenweise Ausgabe auf den Stream. Schreibt ein char auf den Stream.  |
  * +----------+-------------------------------------------------------------------------+
- * | fgets    | char *fgets(char * str, int n, FILE * stream)                           |
+ * | fgets    | char *fgets(char * str, int N, FILE * stream)                           |
  * |          |                                                                         |
- * |          | Zeilenweise Lesen. Liest vom Stream maximale n Zeichenanzahl.           |
+ * |          | Zeilenweise Lesen. Liest vom Stream maximale N Zeichenanzahl.           |
  * |          | Liest eine Zeile vom Stream nur bis zum naechsten Newline (\n).         |
+ * |          | Rueckgabewert ist ein (char *)Pointer auf str.                          |
  * +----------+-------------------------------------------------------------------------+
  * | fgetc    | int fgetc(FILE * stream)                                                |
  * |          |                                                                         |
