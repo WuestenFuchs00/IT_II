@@ -152,21 +152,23 @@ int main()
 
     //File oeffnen im Lesemodus
     FILE *Datei;
-	if ( (Datei = fopen("Messdaten.txt", "r")) == NULL ) {
-		printf("Datei konnte nicht geoeffnet werden");
+	if ( (Datei=fopen("Messdaten.txt", "r")) == NULL ) {
+		printf("Datei kann nicht geoeffnet werden.");
 		return 1;
 	}
    
     /*Einlesen der Messwerte*/
     //solange nicht das Ende des Files erreicht ist
-    while(feof(Datei) == 0)
+    while( feof(Datei) == 0)
     {
-        //Zeit einlesen
-		fscanf(Datei, "%i", iZeit+i);
-          
+		//Zeit einlesen
+		fscanf(Datei, "%i", &iZeit[i]);
+		
         //Messwert einlesen
-        fscanf(Datei, "%f", fMessreihe+i);
-          
+        fscanf(Datei, " %f\n", &fMessreihe[i]);
+        
+		// Oder beides zusammen
+		//fscanf(Datei, "%i %f\n", &iZeit[i], fMessreihe[i]);
         ++i;
     }
      
@@ -177,13 +179,13 @@ int main()
 	izeitmax = iZeit[0];
      
     //Suchen nach groesstem und kleinstem Wert  
-    for(j = 1; j < i; j++)
+    for( j = 1; j < i; j++ )
     {
-        if(fMessreihe[j] < fmin) {
+        if ( fMessreihe[j] < fmin )	{
 			fmin = fMessreihe[j];
 			izeitmin = iZeit[j];
 		}
-		if(fMessreihe[j] > fmax) {
+		if ( fMessreihe[j] > fmax )	{
 			fmax = fMessreihe[j];
 			izeitmax = iZeit[j];
 		}
@@ -193,8 +195,8 @@ int main()
     fclose(Datei);
       
     //File erstellen im Schreibmodus
-    if((Datei = fopen("Result.txt", "w")) == NULL) {
-		printf("Datei konnte nicht erstellt werden");
+    if ( (Datei=fopen("Result.txt", "w")) == NULL ) {
+		printf("Datei kann nicht erstellt werden.");
 		return 1;
 	}
         
@@ -203,21 +205,25 @@ int main()
     fprintf(Datei, "\nGroesster Messwert: %.4f zur Zeit %i Sekunden", fmax, izeitmax);
       
     //Schliessen der Schreib-Datei
-    fclose(Datei); 
+    fclose(Datei);      
       
     /*TEST, OB SCHREIBEN GEKLAPPT HAT*/
-	Datei = fopen("Result.txt", "r");
+	if ( (Datei=fopen("Result.txt", "r")) == NULL ) {
+		printf("Datei kann nicht geoeffnet werden.");
+		return 1;
+	}
+	
     char string[100];
-    while(feof(Datei) == 0)
+    while( feof(Datei) == 0 )
     {         
-        if(fgets(string, 100, Datei) != 0)
+        if(fgets(string, 100, Datei) != 0) // Zeilenweise einlesen
         {
             printf("%s", string);
         }        
     }
       
     //Schliessen des Tests
-    fclose(Datei);
+    fclose(Datei); 
         
     return 0;
 }

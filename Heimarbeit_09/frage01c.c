@@ -140,70 +140,73 @@
      
 int main()
 {
+       
     int i = 0;
     int j = 0;
-    int iMin, iMax;
-    int iZeit[MAX];
     float fMessreihe[MAX];
-    char szFilename[14] = "Messdaten.txt";
-    char szFilename2[13] = "Ergebnis.txt";
-    FILE * Datei;
+    float fmin = 0;
+    float fmax = 0;
+    int iZeit[MAX];
+    int izeitmax = 0;
+    int izeitmin = 0;
 
     //File oeffnen im Lesemodus
-    if ( (Datei = fopen(szFilename, "rt")) == NULL ) {
-        printf("\nDatei kann nicht geoeffnet werden.");
-        return 1;
-    }
+    FILE *Datei;
+	if ( (Datei = fopen("Messdaten.txt", "r")) == NULL ) {
+		printf("Datei konnte nicht geoeffnet werden");
+		return 1;
+	}
    
     /*Einlesen der Messwerte*/
     //solange nicht das Ende des Files erreicht ist
-    while( feof(Datei) == 0 )
+    while(feof(Datei) == 0)
     {
         //Zeit einlesen
-        fscanf(Datei, "%i", &iZeit[i]);
-        
+		fscanf(Datei, "%i", iZeit+i);
+          
         //Messwert einlesen
-        fscanf(Datei, "%f", &fMessreihe[i]);
+        fscanf(Datei, "%f", fMessreihe+i);
           
         ++i;
     }
      
     //Maximal und Minimalwerte auf den ersten Messwert setzen
-    iMin = 0;
-    iMax = 0;
-    
+	fmin = fMessreihe[0];
+	fmax = fMessreihe[0];
+	izeitmin = iZeit[0];
+	izeitmax = iZeit[0];
+     
     //Suchen nach groesstem und kleinstem Wert  
-    for( j = 1; j < i; j++ )
+    for(j = 1; j < i; j++)
     {
-        if ( fMessreihe[j] > fMessreihe[iMax] )  iMax = j;
-        if ( fMessreihe[j] < fMessreihe[iMin] )  iMin = j;
+        if(fMessreihe[j] < fmin) {
+			fmin = fMessreihe[j];
+			izeitmin = iZeit[j];
+		}
+		if(fMessreihe[j] > fmax) {
+			fmax = fMessreihe[j];
+			izeitmax = iZeit[j];
+		}
     }
       
     //Schliessen der Lese-Datei
-    if ( fclose(Datei) != 0 ) {
-        printf("\nDatei kann nicht geschlossen werden.");
-        return 1;
-    }
+    fclose(Datei);
       
     //File erstellen im Schreibmodus
-    if ( (Datei = fopen(szFilename2, "wt")) == NULL ) {
-        printf("\nDatei kann nicht erstellt werden.");
-        return 1;
-    }
+    if((Datei = fopen("Result.txt", "w")) == NULL) {
+		printf("Datei konnte nicht erstellt werden");
+		return 1;
+	}
         
     //Schreiben in Datei
-    fprintf(Datei, "Kleinster Messwert: %.4f zur Zeit %i Sekunden", fMessreihe[iMin], iZeit[iMin]);
-    fprintf(Datei, "\nGroesster Messwert: %.4f zur Zeit %i Sekunden", fMessreihe[iMax], iZeit[iMax]);
+    fprintf(Datei, "Kleinster Messwert: %.4f zur Zeit %i Sekunden", fmin, izeitmin);
+    fprintf(Datei, "\nGroesster Messwert: %.4f zur Zeit %i Sekunden", fmax, izeitmax);
       
     //Schliessen der Schreib-Datei
-    if ( fclose(Datei) != 0 ) {
-        printf("\nDatei kann nicht geschlossen werden.");
-        return 1;
-    }
+    fclose(Datei); 
       
     /*TEST, OB SCHREIBEN GEKLAPPT HAT*/
-    Datei = fopen(szFilename2, "rt");
-    
+	Datei = fopen("Result.txt", "r");
     char string[100];
     while(feof(Datei) == 0)
     {         
@@ -214,7 +217,7 @@ int main()
     }
       
     //Schliessen des Tests
-    fclose(Datei); 
+    fclose(Datei);
         
     return 0;
 }

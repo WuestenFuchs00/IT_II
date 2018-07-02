@@ -62,7 +62,8 @@
  * +----------+-------------------------------------------------------------------------+
  * | fgets    | char *fgets(char * str, int N, FILE * stream)                           |
  * |          |                                                                         |
- * |          | Zeilenweise Lesen. Liest vom Stream <stream>maximale N Zeichenanzahl.   |
+ * |          | Zeilenweise Lesen. Liest vom <stream> maximal N Zeichen und nur bis zum |
+ * |          | naechsten Zeilenumbruch (\n,\r,\r\n).                                   |
  * |          |                                                                         |
  * |          | Liest eine Zeile (N Zeichen) vom Stream <stream> nur bis zum naechsten  |
  * |          | Newline (\n) und speichert das Gelesene in <str>.                       |

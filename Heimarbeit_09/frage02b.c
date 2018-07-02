@@ -193,7 +193,7 @@ int main()
 		//Einlesen des Strings
 		if (fgets(sZeile, 200, Datei) != 0) {
 			//Auslesen der benötigten Werte aus dem String
-			p = strchr(sZeile, 45); /* Ermittelt Position von Minuszeichen (-) ASCII 45 */
+			p = strchr(sZeile, '-' - 0); /* Ermittelt Position von Minuszeichen (-) ASCII 45 */
 			/* Auslesen der Geschwindigkeit, char fuer Zahlen 0,1,.. beginnt ab 48,49,.. in ASCII */
 			p += 2; /* Zeiger auf erste Ziffer der Geschwindigkeit */
 			iArray[i++] = (*p-48)*100 + (*(p+1)-48)*10 + (*(p+2)-48);
