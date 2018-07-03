@@ -1,5 +1,6 @@
 /**
  * LinkedList.c
+ *
  * Einfache verkettete Liste
  *
  * Erstellung einer einfach verketteten Liste:
@@ -53,174 +54,221 @@
  *   -> Sowohl in Tag-Namespace als auch Ordinary-Namespace findet sich "struct name".
  *   -> Damit ist der Typ "struct name" komplett.
  */
-typedef struct { // anonymous struct
+typedef struct KNOTEN { 
 	char szBezeichnung[MAX];
 	int iWert;
-	struct KNOTEN *pNext; // forward-declaration
+	struct KNOTEN * pNext; // forward-declaration
 } KNOTEN;
 
-typedef struct KNOTEN {
-	KNOTEN *pFirst;
+typedef struct {
+	KNOTEN * pFirst;
 	int iAnzahl;
 } LISTE;
 
 /*
- * Erzeugt und initialisiert eine leere Liste
- */
-LISTE* Initialize() {
-	LISTE *pListe = (LISTE *) malloc(sizeof(LISTE));
-	//(*pListe).pFirst = NULL
-	pListe->pFirst = NULL;
-	pListe->iAnzahl = 0;
-	return pListe;
-}
-
-/*
- * Returns the number of all nodes in linked list.
- */
-int GetSize(LISTE *Liste) {
-	return Liste->iAnzahl;
-}
-
-/*
  * Creates a new node and assigns the values.
  */
-KNOTEN * CreateNode(char szBezeichnung[], int iWert) {
-	KNOTEN *pKnoten = (KNOTEN *) malloc(sizeof(KNOTEN));
+KNOTEN * CreateNode(char * szBezeichnung, int iWert) {
+	KNOTEN * pKnoten = (KNOTEN *) malloc(sizeof(KNOTEN));
 	pKnoten->pNext = NULL;
+	
 	// Werte zuweisen
-	strcpy(pKnoten->szBezeichnung, szBezeichnung); // String kopieren
 	//strncpy(pKnoten->szBezeichnung, szBezeichnung, strlen(szBezeichnung)+1); +1 bedeutet \0 (String-Ende)
+	strcpy(pKnoten->szBezeichnung, szBezeichnung); // String kopieren
 	pKnoten->iWert = iWert;
 	return pKnoten;
 }
 
 /*
+ * Durchsucht die Liste nach Knoten an bestimmter Stelle und liefert 
+ * Pointer auf ihn zurueck. Listelemente beginnen ab Index 1 (bis N).
+ */
+KNOTEN * Search(LISTE * pListe, int iStelle /* 1..N */) {
+	KNOTEN * pTemp = pListe->pFirst;
+	int i = 1;
+	while ( i < iStelle ) {
+		pTemp = pTemp->pNext;
+		++i;
+	}
+	return pTemp;
+}
+
+/*
+ * Removes a node with specified index (iStelle) from list.
+ * First node has index 1. Last node has index N.
+ *
+ * Return value:
+ *   -1 (FALSE) if the list does not exists
+ *    1 (TRUE)  if the specified node has been removed successfully, or the list is empty
+ */
+int DeleteNode(LISTE * pListe, int iStelle) {
+	if ( pListe == NULL ) return -1; // FALSE
+	if ( pListe->pFirst == NULL ) return 1; // TRUE;
+	
+	KNOTEN * pTemp, * pDelete;
+	
+	if ( iStelle != 1 ) {
+		// Sucht nach Knoten an Stelle <iStelle> und <iStelle-1>
+		pTemp    = Search(pListe, iStelle-1);
+		pDelete  = Search(pListe, iStelle);
+		// Loesche Knoten und verweist die Zeiger neu
+		pTemp->pNext = pDelete->pNext;
+		free(pDelete);
+	}
+	else { // iStelle == 1
+		pTemp = pListe->pFirst->pNext;
+		free(pListe->pFirst);
+		pListe->pFirst = pTemp;
+	}
+	
+	// Dekrementiert Knotenanzahl
+	pListe->iAnzahl -= 1;
+	
+	return 1; // TRUE
+}
+
+/*
+ * Removes all nodes of the list (itertiv, loop)
+ * Return value:
+ *   -1 (FALSE) if the list is null and nothing can be deleted
+ *    1 (TRUE)  if the whole list has been deleted successfully
+ */
+int DeleteList(LISTE * pListe) {
+	int res = DeleteNode(pListe, 1);
+	if ( res != -1 ) {
+		while ( pListe->pFirst != NULL )
+			res = DeleteNode(pListe, 1);		
+	}
+	return res;
+}
+
+/*
+ * Returns the number of all nodes in linked list.
+ */
+int GetSize(LISTE * pListe) {
+	return pListe->iAnzahl;
+}
+
+/*
  * Returns the pointer to the first node of linked list.
  */
-KNOTEN * GetFirstNode (LISTE * Liste) {
-	return Liste->pFirst;
+KNOTEN * GetFirstNode (LISTE * pListe) {
+	return pListe->pFirst;
 }
 
 /*
  * Returns the pointer to the last node of linked list.
- * If the list is empty (no node exists), the pointer to list is returned.
- * One may have to cast from generic type (void *) to specific type as (KNOTEN *) or (LISTE *).
  */
-void * GetLastNode (LISTE * Liste) {
-	if ( Liste == NULL ) return NULL;
-	//if ( Liste->pFirst == NULL ) return Liste;
-	if ( Liste->iAnzahl == 0 ) return Liste;
-	KNOTEN *pKnoten = Liste->pFirst;
-	while ( pKnoten->pNext != NULL ) {
-		pKnoten = (KNOTEN *) pKnoten->pNext;
-	}
-	return pKnoten;
-}
- 
-/*
- * Inserts a new node (Knoten) at the end of linked list.
- *
- * Return value:
- *   -1 (FALSE) if no node can be inserted
- *    1 (TRUE)  if new node has been inserted successfully
- */
-int InsertAtEnd(LISTE * Liste, char szBezeichnung[], int iWert) {
-	if ( Liste == NULL ) return -1; // FALSE
-	
-	KNOTEN *pKnoten = NULL, *pLast = NULL;
-	
-	// Neuen Knoten erzeugen und Werte zuweisen
-	pKnoten = CreateNode(szBezeichnung, iWert);
-	
-	// Knoten in die Liste (am Ende) einfuegen
-	if ( Liste->iAnzahl == 0 ) {
-		Liste->pFirst = pKnoten;
-	} 
-	else {
-		pLast = (KNOTEN *)GetLastNode(Liste);
-		pLast->pNext = (struct KNOTEN *) pKnoten;
-	}	
-	
-	// Inkrementiert Knotenzahl
-	Liste->iAnzahl += 1;
-	
-	return 1; // TRUE
+KNOTEN * GetLastNode (LISTE * pListe) {
+	return Search(pListe, pListe->iAnzahl);
 }
 
 /*
- * Inserts a new node (Knoten) in first position of linked list.
+ * Returns the pointer to a certain node with index <iStelle>
+ */
+KNOTEN * GetNode (LISTE * pListe, int iStelle) {
+	return Search(pListe, iStelle);
+}
+
+/*
+ * Inserts a new node in first position of linked list.
  *
  * Return value:
  *   -1 (FALSE) if no node can be inserted
  *    1 (TRUE)  if new node has been inserted successfully
  */
-int InsertAtBegin(LISTE * Liste, char szBezeichnung[], int iWert) {
-	if ( Liste == NULL ) return -1; // FALSE
+int InsertFront(LISTE * pListe, char * szBezeichnung, int iWert) {
+	if ( pListe == NULL ) return -1; // FALSE
 	
 	// Neuen Knoten erzeugen und Werte zuweisen
-	KNOTEN *pKnoten = CreateNode(szBezeichnung, iWert);
+	KNOTEN * pKnoten = CreateNode(szBezeichnung, iWert);
 	
 	// Knoten in die Liste einfuegen
-	pKnoten->pNext = (struct KNOTEN *) Liste->pFirst;
-	Liste->pFirst = pKnoten;
+	pKnoten->pNext = pListe->pFirst;
+	pListe->pFirst = pKnoten;
 	
-	// Inkrementiert Knotenzahl
-	Liste->iAnzahl += 1;
+	// Inkrementiert Knotenanzahl
+	pListe->iAnzahl += 1;
 	
 	return 1; // TRUE
 }
 
 /*
- * Removes a node with specified index from list.
- * First node has index 0. Last node has index n-1.
+ * Inserts a new node at the end of linked list.
  *
  * Return value:
- *   -1 (FALSE) if no node can be removed
- *    1 (TRUE)  if the specified node has been removed successfully
+ *   -1 (FALSE) if no node can be inserted
+ *    1 (TRUE)  if new node has been inserted successfully
  */
-int RemoveNode(LISTE * Liste, int iIndex) {
-	if ( Liste == NULL || Liste->pFirst == NULL ) return -1; // FALSE
-	if ( iIndex >= Liste->iAnzahl || iIndex < 0 ) return -1;
+int InsertEnd(LISTE * pListe, char * szBezeichnung, int iWert) {
+	if ( pListe == NULL ) return -1; // FALSE
 	
-	int i = 0;
-	KNOTEN * pKnoten = Liste->pFirst;
-	KNOTEN * pTemp = NULL;
+	// Neuen Knoten erzeugen und Werte zuweisen
+	KNOTEN * pNewNode = CreateNode(szBezeichnung, iWert);
 	
-	if ( iIndex == 0 ) {
-		Liste->pFirst = (KNOTEN *) pKnoten->pNext;
-		free(pKnoten);
-	} else {
-		while ( i++ < iIndex-1 ) {
-			pKnoten = (KNOTEN *) pKnoten->pNext;
-		}
-		pTemp = (KNOTEN *) pKnoten->pNext;
-		pKnoten->pNext = pTemp->pNext;
-		free(pTemp);
+	// Knoten am Ende der Liste einfuegen
+	KNOTEN * pLastNode = Search(pListe, pListe->iAnzahl); // Letzter Knoten
+	
+	if ( pLastNode == NULL ) { // Liste ist noch leer => Einfuegen am Anfang
+		pListe->pFirst = pNewNode;
+	}
+	else {
+		pLastNode->pNext = pNewNode;
 	}
 	
-	Liste->iAnzahl -= 1;
+	// Inkrementiert Knotenzahl
+	pListe->iAnzahl += 1;
 	
 	return 1; // TRUE
+}
+
+/*
+ * Removes a node with specified index (iStelle) from list.
+ * First node has index 1. Last node has index N.
+ *
+ * Return value:
+ *   -1 (FALSE) if the list does not exists
+ *    1 (TRUE)  if the specified node has been removed successfully, or the list is empty
+ */
+int RemoveNode(LISTE * pListe, int iStelle) {
+	return DeleteNode(pListe, iStelle);
+}
+
+/*
+ * Removes all nodes of the list (recursive).
+ * Return value:
+ *   -1 (FALSE) if the list is null and nothing can be deleted
+ *    1 (TRUE)  if the whole list has been deleted successfully
+ */
+int RemoveList(LISTE * pListe) {
+	int res = RemoveNode(pListe, 1);
+	if ( res != -1 ) {
+		if ( pListe->pFirst != NULL )
+			res = RemoveList(pListe);
+	}
+	return res;
 }
 
 /*
  * Prints the content of a node
  */
-void PrintNode(KNOTEN *pKnoten) {
+void PrintNode(KNOTEN * pKnoten) {
 	printf("\n Inhalt: (%s,%i)\n", pKnoten->szBezeichnung, pKnoten->iWert);
 }
 
 /*
  * Prints all list elements
  */
-void PrintList(LISTE * Liste) {
-	if ( Liste == NULL || Liste->pFirst == NULL ) return;
-	KNOTEN *pKnoten = Liste->pFirst;
+void PrintList(LISTE * pListe) {
+	if ( pListe == NULL || pListe->pFirst == NULL ) return;
+	
+	KNOTEN *pKnoten = pListe->pFirst;
+	
 	printf("  first : ");
+	
 	do {
 		printf(" (%s,%i) ->", pKnoten->szBezeichnung, pKnoten->iWert);
-		pKnoten = (KNOTEN *) pKnoten->pNext;
+		pKnoten = pKnoten->pNext;
 	} while ( pKnoten != NULL );
 }
 
@@ -233,13 +281,16 @@ int main () {
 	char szBezeichnung[MAX];
 	
 	// Initialisierung einer leeren Liste
+	LISTE Liste;
+	Liste.pFirst = NULL;
+	Liste.iAnzahl = 0;
+	
 	printf("\n Leere Liste wurde initialisiert.");
-	LISTE * Liste = Initialize();	
-	printf("\n Knotenanzahl: %i\n", GetSize(Liste));
+	printf("\n Knotenanzahl: %i\n", GetSize(&Liste));
 	
 	do {	
 		fprintf(stdout, "\n Aktionen zum Ausfuehren:\n");
-		fprintf(stdout, "  (1) InsertAtBegin     (2) InsertAtEnd\n");
+		fprintf(stdout, "  (1) InsertFront       (2) InsertEnd\n");
 		fprintf(stdout, "  (3) GetFirstNode      (4) GetLastNode\n");
 		fprintf(stdout, "  (5) GetSize           (6) RemoveNode\n");
 		fprintf(stdout, "  (7) PrintList         (8) Exit\n\n");
@@ -255,12 +306,12 @@ int main () {
 			// Einfuegen vom Knoten in leere Liste	
 			fprintf(stdout, "\n Einfuegen von Knoten. Beispiel: A 3\n");
 			for ( j = 0; j < iAnzahl; j++ ) {
-				printf(" Knoten %1i: ", j+1);
+				printf(" Knoten %i: ", j+1);
 				fscanf(stdin, "%s" "%i", szBezeichnung, &iWert);
-				iErg = ( i == 1 ) ? InsertAtBegin(Liste, szBezeichnung, iWert) : InsertAtEnd(Liste, szBezeichnung, iWert);
+				iErg = ( i == 1 ) ? InsertFront(&Liste, szBezeichnung, iWert) : InsertEnd(&Liste, szBezeichnung, iWert);
 				if ( iErg != 1 ) {
 					printf("\n Fehler! Knoten kann nicht hinzugefuegt werden.\n");
-					free(Liste); // Speicherplatz freigeben
+					iErg = RemoveList(&Liste); // Speicherplatz freigeben
 					return 1; // Programm abbrechen
 				}
 			}
@@ -268,45 +319,47 @@ int main () {
 		else {
 			switch ( i ) {
 				case 3: // GetFirstNode
-					PrintNode(GetFirstNode(Liste));
+					PrintNode(GetFirstNode(&Liste));
 					break;
 				case 4: // GetLastNode
-					if ( Liste->iAnzahl > 0 ) {
-						PrintNode((KNOTEN *)GetLastNode(Liste));
+					if ( Liste.iAnzahl > 0 ) {
+						PrintNode(GetLastNode(&Liste));
 					}
 					break;
 				case 5: // GetSize
-					printf("\n Anzahl der Knoten: %i\n", GetSize(Liste));
+					printf("\n Anzahl der Knoten: %i\n", GetSize(&Liste));
 					break;
 				case 6:
 					printf("\n Index des zu entfernenden Knotens: ");
 					scanf("%i", &i);
-					iErg = RemoveNode(Liste, i);
+					iErg = RemoveNode(&Liste, i);
 					if ( iErg != 1 ) {
 						printf("\n Fehler! Knoten kann nicht hinzugefuegt werden.\n");
-						free(Liste); // Speicherplatz freigeben
+						iErg = RemoveList(&Liste);
 						return 1; // Programm abbrechen
 					}
 					break;
 				case 7: // PrintList, Anzeigen der Listenelemente
 					printf("\n Listenelemente:\n");
 					printf(" ======================================================\n");
-					PrintList(Liste);
+					PrintList(&Liste);
 					printf("\n ======================================================\n");
 					break;
 				default:
-					free(Liste);
-					return 0;
 					break;
 			}
-		}
-		
+		}		
 		printf("\n Wollen Sie weitermachen? Ja(1) Nein(0) ");
 		scanf("%i", &i);
 	} while ( i );
 	
-	// Speicherplatz freigeben
-	free(Liste);
+	// Loescht ganze Liste
+	iErg = RemoveList(&Liste);
+	
+	if ( Liste.pFirst == NULL ) {
+		printf("\n Bevor beendet wird, wurdne alle Knoten entfernt.");
+		printf("\n Knotenanzahl: %i\n\n", GetSize(&Liste));
+	}
 	
 	return 0;
 }
