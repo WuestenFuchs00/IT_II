@@ -7,9 +7,9 @@
 PREFIX='http://www.ais.mw.tum.de'
 # 1. Get the whole webpage content with <curl -L>.
 # 2. Direct the downloaded content to <grep> to search for lines with ".pdf".
-# 3. <Grep> then redirecta (stdout, 1>) the found strings to file <tmp.txt>.
+# 3. <Grep> then redirects (stdout, 1>) the found strings to file <tmp.txt>.
 #    Attention: In Windows, the whole content in <tmp.txt> is handled as ONE line.
-curl -L https://www.ais.mw.tum.de/lehre/grundlagen-und-vertiefungsfaecher/informationstechnik-ii/ | grep \.pdf 1> tmp.txt
+curl -L https://www.ais.mw.tum.de/lehre/grundlagen-und-vertiefungsfaecher/informationstechnik-ii/ | grep '.pdf' 1> tmp.txt
 # Since the content in <tmp.txt> is only ONE line, we will read string by string (separated by white-space) and save only strings
 # that represent a download link in <links.txt>.
 while read str; do
